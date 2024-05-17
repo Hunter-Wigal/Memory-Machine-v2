@@ -1,0 +1,40 @@
+div{
+    color: red;
+}
+
+.container{
+    display: flexbox;
+    width: 100;
+    position: relative;
+}
+
+.row{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.col{
+    position: inherit;
+    display: flex;
+    flex-direction: column;
+    margin-inline: 1%;
+    border: 1px solid black;
+}
+
+.assignment-table{
+    background-color: white;
+    margin: auto;
+    margin-top: 3%;
+    width: 40%;
+}
+
+.assignment-table > thead{
+    background-color: black;
+    color: white;
+    font-size: 30px;
+}
+
+th, td{
+    padding-inline: 5%;
+}
