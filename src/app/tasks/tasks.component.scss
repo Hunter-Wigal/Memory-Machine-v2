@@ -18,8 +18,6 @@ div{
     position: inherit;
     display: flex;
     flex-direction: column;
-    margin-inline: 1%;
-    border: 1px solid black;
 }
 
 .assignment-table{
@@ -37,4 +35,16 @@ div{
 
 th, td{
     padding-inline: 5%;
+}
+
+.task-form{
+    position: relative;
+    display: flex;
+    width: 40%;
+    margin: auto;
+    border: 1px solid black;
+}
+
+.task-form input{
+    width: 25%;
 }

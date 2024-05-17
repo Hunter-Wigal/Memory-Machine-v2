@@ -1,24 +1,32 @@
 import { Time } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Timestamp, addDoc } from 'firebase/firestore';
+import { FirestoreService } from '../../firestore.service';
+import { FormControl, ReactiveFormsModule, FormsModule, NgForm } from '@angular/forms';
 
 // Temp class
-interface Task{
-  desc: string;
+export interface Task {
+  title: string;
   date: Date;
-  time?: Time;
+  time?: String;
 }
+
+
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, FormsModule],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss'
 })
 
 
-export class TasksComponent implements OnInit{
+export class TasksComponent implements OnInit {
+  @ViewChild('taskForm') taskForm!: NgForm;
+  
   value: String = "Test render"
 
   testNum: number = 10;
@@ -27,19 +35,59 @@ export class TasksComponent implements OnInit{
 
   items = ["item1", "item2", "item3", "item4"];
 
-  tasks: Task[] = [{desc: "Assignment1", date: new Date('11-11-11')}];
+  tasks: Task[] = [];
 
-  constructor(){
 
+
+
+  constructor(private firestore: FirestoreService) {
+  }
+
+
+  updatetasks(){
+    this.tasks = [];
+
+    this.firestore.getTasks().then((response) => {
+      for (let item of response) {
+        let data = item.data()['task'];
+        console.log(data);
+        let task = { title: data['title'], date: new Date(data['date'].seconds * 1000) }
+        this.tasks.push(task);
+      }
+    })
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    
+    this.updatetasks();
   }
 
-  addOne(){
+  addTask(newTask: Task) {
+    let taskDate = new Date(newTask.date);
+
+    if (newTask.time != undefined && newTask.time != '') {
+      let split = newTask.time.split(":");
+      let taskTime = {hours: Number(split[0]), minutes: Number(split[1])};
+      taskDate.setHours(taskTime.hours, taskTime.minutes);
+    }
+    else
+      taskDate.setHours(23, 59);
+
+    this.firestore.insertNewTask({ title: newTask.title, date: taskDate }).then((success) => {
+      if (success){
+        this.taskForm.reset();
+        window.alert("Successfully added new task!");
+        this.updatetasks();
+      }
+      else{
+        window.alert("Failed to add new task");
+      }
+    })
+
+
+  
+  }
+
+  addOne() {
     this.testNum += 1;
   }
 }

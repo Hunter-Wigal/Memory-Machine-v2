@@ -3,6 +3,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { TasksComponent } from "./tasks/tasks.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { FooterComponent } from "./footer/footer.component";
+import { FirebaseApp } from '@angular/fire/app';
 
 @Component({
     selector: 'app-root',
@@ -13,4 +14,5 @@ import { FooterComponent } from "./footer/footer.component";
 })
 export class AppComponent {
   title = 'memory_machine_app';
+  
 }

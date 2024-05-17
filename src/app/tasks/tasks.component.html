@@ -6,23 +6,6 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            Test Column 1
-        </div>
-        <div class="col">
-            Test column 2
-        </div>
-        @for(item of items; track $index)
-        {
-        @if(!(item === "item3")){
-        <div class="col">
-            {{item}}
-        </div>
-        }
-        }
-
-    </div>
-    <div class="row">
         <table class="assignment-table">
             <thead>
                 <tr>
@@ -33,23 +16,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Test name</td>
-                    <td>Test date</td>
-                    <td>Test time</td>
-                    <td><button>Delete</button></td>
-                </tr>
                 @for(task of tasks; track $index)
                 {
-                    <tr>
-                        <td>{{task.desc}}</td>
-                        <td>{{task.date | date}}</td>
-                        <td>{{task.date | date:'shortTime'}}</td>
-                        <td><button>Delete</button></td>
-                    </tr>
+                <tr>
+                    <td>{{task.title}}</td>
+                    <td>{{task.date | date}}</td>
+                    <td>{{task.date | date:'shortTime'}}</td>
+                    <td><button>Delete</button></td>
+                </tr>
                 }
             </tbody>
         </table>
+    </div>
+    <div class="row">
+            <form class="task-form" #taskForm="ngForm" (ngSubmit)="addTask(taskForm.value)">
+                <input placeholder="Task name" ngModel name="title" required>
+                <input type="date" ngModel name="date" required>
+                <input type="time" ngModel name="time">
+                <input type="submit">
+            </form>
     </div>
 
 </div>
