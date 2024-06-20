@@ -8,3 +8,22 @@ body{
     margin: 0;
 }
 
+.container{
+    display: flex;
+    width: 100%;
+    position: absolute;
+    flex-direction: column;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.col{
+    display: flex;
+    flex-direction: row;
+    width: auto;
+}

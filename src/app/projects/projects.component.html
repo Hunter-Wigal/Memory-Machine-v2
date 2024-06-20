@@ -1,1 +1,35 @@
-<p>projects works!</p>
+<div class="container">
+    <div class="table">
+        <div class="thead">
+            <div class="th">
+                Project Name
+            </div>
+            <div class="th middle">
+                Number of Tasks
+            </div>
+            <div class="th">
+                Priority
+            </div>
+        </div>
+        <div class="content">
+            @for(project of projects; track $index)
+            {
+            <div class="table-row">
+                <div class="table-cell">{{project.projectName}}</div>
+                <div class="table-cell middle">{{project.numTasks}}</div>
+                <div class="table-cell">{{project.priority}}</div>
+            </div>
+            }
+        </div>
+    </div>
+        <!-- TODO Add validation -->
+    <form class="input-container" #projectForm="ngForm" (ngSubmit)="submitProject(projectForm)">
+        <input placeholder="Enter Project Name" name="projectName" ngModel>
+        <input placeholder="Enter Priority" type="number" value="0" name="priority" ngModel>
+        <input type="submit" value="Submit" id="submit-btn">
+        @if(!priorityValid){
+        <div class="invalid" style="grid-column: 2;">Please enter a valid priority number</div>
+        }
+    </form>
+
+</div>

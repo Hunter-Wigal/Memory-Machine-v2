@@ -3,8 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Timestamp, addDoc } from 'firebase/firestore';
-import { FirestoreService } from '../../firestore.service';
+import { FirestoreService } from '../services/firestore.service';
 import { FormControl, ReactiveFormsModule, FormsModule, NgForm } from '@angular/forms';
+import { CalendarComponent } from "../calendar/calendar.component";
 
 // Temp class
 export interface Task {
@@ -16,28 +17,22 @@ export interface Task {
 
 
 @Component({
-  selector: 'app-tasks',
-  standalone: true,
-  imports: [DatePipe, FormsModule],
-  templateUrl: './tasks.component.html',
-  styleUrl: './tasks.component.scss'
+    selector: 'app-tasks',
+    standalone: true,
+    templateUrl: './tasks.component.html',
+    styleUrl: './tasks.component.scss',
+    imports: [DatePipe, FormsModule, CalendarComponent]
 })
 
 
 export class TasksComponent implements OnInit {
   @ViewChild('taskForm') taskForm!: NgForm;
-  
-  value: String = "Test render"
 
-  testNum: number = 10;
 
   testClass = "test"
 
-  items = ["item1", "item2", "item3", "item4"];
 
   tasks: Task[] = [];
-
-
 
 
   constructor(private firestore: FirestoreService) {
@@ -64,14 +59,17 @@ export class TasksComponent implements OnInit {
   addTask(newTask: Task) {
     let taskDate = new Date(newTask.date);
 
+    // Extract the hours and minutes from the string. Easiest way to do it
     if (newTask.time != undefined && newTask.time != '') {
       let split = newTask.time.split(":");
       let taskTime = {hours: Number(split[0]), minutes: Number(split[1])};
       taskDate.setHours(taskTime.hours, taskTime.minutes);
     }
     else
+    // Assume end of day if not specified
       taskDate.setHours(23, 59);
 
+    // Call function in firestore service, handle return value from promise
     this.firestore.insertNewTask({ title: newTask.title, date: taskDate }).then((success) => {
       if (success){
         this.taskForm.reset();
@@ -87,7 +85,4 @@ export class TasksComponent implements OnInit {
   
   }
 
-  addOne() {
-    this.testNum += 1;
-  }
 }

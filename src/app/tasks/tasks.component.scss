@@ -1,3 +1,5 @@
+$table-width: 75%;
+
 div{
     color: red;
 }
@@ -18,13 +20,14 @@ div{
     position: inherit;
     display: flex;
     flex-direction: column;
+    border: 1px solid black;
 }
 
 .assignment-table{
     background-color: white;
     margin: auto;
     margin-top: 3%;
-    width: 40%;
+    width: $table-width;
 }
 
 .assignment-table > thead{
@@ -40,7 +43,7 @@ th, td{
 .task-form{
     position: relative;
     display: flex;
-    width: 40%;
+    width: $table-width;
     margin: auto;
     border: 1px solid black;
 }

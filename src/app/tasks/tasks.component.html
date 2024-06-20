@@ -1,40 +1,43 @@
-<p>tasks works!</p>
-<h1>This renders a variable! Value: {{value}}</h1>
-
-<div [className]="testClass">{{testNum}}</div>
-<button (click)="addOne()">Click</button>
-
 <div class="container">
     <div class="row">
-        <table class="assignment-table">
-            <thead>
-                <tr>
-                    <th>Task</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for(task of tasks; track $index)
-                {
-                <tr>
-                    <td>{{task.title}}</td>
-                    <td>{{task.date | date}}</td>
-                    <td>{{task.date | date:'shortTime'}}</td>
-                    <td><button>Delete</button></td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="row">
-            <form class="task-form" #taskForm="ngForm" (ngSubmit)="addTask(taskForm.value)">
-                <input placeholder="Task name" ngModel name="title" required>
-                <input type="date" ngModel name="date" required>
-                <input type="time" ngModel name="time">
-                <input type="submit">
-            </form>
-    </div>
+        <div class="col" style="width: 50%;">
+            <div class="row">
+                <table class="assignment-table">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(task of tasks; track $index)
+                        {
+                        <tr>
+                            <td>{{task.title}}</td>
+                            <td>{{task.date | date}}</td>
+                            <td>{{task.date | date:'shortTime'}}</td>
+                            <td><button>Delete</button></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
+            <div class="row">
+                <form class="task-form" #taskForm="ngForm" (ngSubmit)="addTask(taskForm.value)">
+                    <input placeholder="Task name" ngModel name="title" required>
+                    <input type="date" ngModel name="date" required>
+                    <input type="time" ngModel name="time">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+
+
+        <div class="col" style="width: 50%;">
+            <app-calendar></app-calendar>
+        </div>
+    </div>
 </div>
