@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { TasksComponent } from './tasks/tasks.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { ScheduleComponent } from './schedule/schedule.component';
-import { ProjectsComponent } from './projects/projects.component';
+import { HomeComponent } from './pages/home/home.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
+import { ScheduleComponent } from './pages/schedule/schedule.component';
+import { ProjectsComponent } from './pages/projects/projects.component';
 
 export const routes: Routes = [
     {

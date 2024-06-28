@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { TasksComponent } from "./tasks/tasks.component";
-import { NavbarComponent } from "./navbar/navbar.component";
-import { FooterComponent } from "./footer/footer.component";
+import { NavbarComponent } from "./components/navbar/navbar.component";
+import { FooterComponent } from "./components/footer/footer.component";
 import { FirebaseApp } from '@angular/fire/app';
 
 @Component({
@@ -10,7 +9,7 @@ import { FirebaseApp } from '@angular/fire/app';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    imports: [RouterOutlet, TasksComponent, NavbarComponent, FooterComponent]
+    imports: [RouterOutlet, NavbarComponent, FooterComponent]
 })
 export class AppComponent {
   title = 'memory_machine_app';

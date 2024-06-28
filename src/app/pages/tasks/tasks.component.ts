@@ -3,9 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Timestamp, addDoc } from 'firebase/firestore';
-import { FirestoreService } from '../services/firestore.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { FormControl, ReactiveFormsModule, FormsModule, NgForm } from '@angular/forms';
-import { CalendarComponent } from "../calendar/calendar.component";
+import { CalendarComponent } from "../../pages/calendar/calendar.component";
 
 // Temp class
 export interface Task {

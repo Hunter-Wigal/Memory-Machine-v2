@@ -1,0 +1,46 @@
+<nav>
+    <img routerLink="/home" class="logo">
+    <h3 routerLink="/home" class="title">Memory Machine 2.0</h3>
+
+    <div class="links">
+        <a routerLink="/tasks" routerLinkActive="active">Tasks</a>
+        <a routerLink="/calendar" routerLinkActive="active" >Calendar</a>
+        <a routerLink="/schedule" routerLinkActive="active" >Schedule</a>
+        <a routerLink="/projects" routerLinkActive="active" >Projects</a>
+    </div>
+
+    <div class="account">
+        @if(currUser == null){
+            <button (click)="registerModal(signUp)">Sign Up</button>
+            <button (click)="signInModal(signIn)">Sign In</button>
+        }
+        @else {
+            <a target="#">Account</a>
+            <p>{{currUser.displayName}}</p>
+        }
+    </div>
+</nav>
+
+
+<dialog class="modal" #signUp>
+    <span class="close" #close>&times;</span>
+    <form class="modal-content" #registerForm="ngForm" (ngSubmit)="registerUser(registerForm)">
+        <h1 class="title">Sign Up</h1>
+        <input placeholder="First Name" type="text" first-name ngModel name="firstname">
+        <input placeholder="Last Name" type="text" last-name ngModel name="lastname">
+        <input placeholder="Email Address" type="text" email ngModel name="email">
+        <input placeholder="Password" type="password" password ngModel name="password">
+        <button type="submit">Submit</button>
+    </form>
+</dialog>
+
+
+<dialog class="modal" #signIn>
+    <span class="close" #close>&times;</span>
+    <form class="modal-content" #signInForm="ngForm" (ngSubmit)="login(signInForm)">
+        <h1 class="title">Sign In</h1>
+        <input placeholder="Email Address" type="text" email ngModel name="email">
+        <input placeholder="Password" type="password" password ngModel name="password">
+        <button type="submit">Submit</button>
+    </form>
+</dialog>

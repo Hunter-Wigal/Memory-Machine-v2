@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Firestore, QueryDocumentSnapshot, addDoc, collection, getDocs } from "@angular/fire/firestore";
-import { Task } from '../tasks/tasks.component'
-import { Project } from "../projects/projects.component";
+import { Task } from '../pages/tasks/tasks.component'
+import { Project } from "../pages/projects/projects.component";
 
 @Injectable({
     providedIn: 'root'

@@ -4,9 +4,6 @@ nav{
     height: 7.5%;
     margin: 0px;
     display: flex;
-    // position: fixed;
-    left: 0;
-    top: 0;
     align-items: center;
 }
 
@@ -18,6 +15,7 @@ nav{
     position: relative;
     display: block;
     margin-inline: 1%;
+    border: 2px solid black;
 }
 
 .links{
@@ -45,4 +43,10 @@ nav{
 
 .title:hover{
     color: white;
+}
+
+.account{
+    position: fixed;
+    right: 0;
+    margin-right: 2%;
 }

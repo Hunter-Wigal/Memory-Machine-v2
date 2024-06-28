@@ -13,6 +13,7 @@ export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), 
     provideClientHydration(),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    
     provideFirestore(() => getFirestore() ),
     provideAnalytics(() => getAnalytics()),
   ]

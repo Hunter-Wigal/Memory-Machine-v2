@@ -3,27 +3,70 @@ html {
     height: 100%;
 }
 
-body{
+body {
     background-color: silver;
     margin: 0;
 }
 
-.container{
+.container {
     display: flex;
     width: 100%;
     position: absolute;
     flex-direction: column;
 }
 
-.row{
+.row {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-around;
 }
 
-.col{
+.col {
     display: flex;
     flex-direction: row;
     width: auto;
+}
+
+.modal {
+    width: 40%;
+    height: 60%;
+    background-color: blue;
+    color: white;
+    margin: auto;
+    overflow: hidden;
+}
+
+.modal-content {
+    text-align: center;
+    height: 100%;
+    overflow: hidden;
+    .title{
+        margin-bottom: 2%;
+    }
+
+    input {
+        display: block;
+        position: relative;
+        margin: auto;
+        width: 60%;
+        height: 6%;
+        margin-top: 1%;
+    }
+}
+
+dialog[open] {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.close {
+    background-color: gray;
+    font-size: 30px;
+    width: 2rem;
+    height: 2rem;
+    position: fixed;
+    right: 0;
+    top: 0;
+    text-align: center;
 }

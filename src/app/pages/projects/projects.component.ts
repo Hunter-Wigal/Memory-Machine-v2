@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FirestoreService } from '../services/firestore.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { FormsModule, NgForm } from '@angular/forms';
 
 export interface Project {
