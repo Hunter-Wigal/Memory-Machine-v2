@@ -18,6 +18,9 @@ export class NavbarComponent implements OnInit {
 
   constructor(private authService: AuthService) {
     this.currUser = this.authService.getCurrUser();
+    this.authService.setUserFunc((user: User) => {
+      this.currUser = user;
+    })
   }
 
   ngOnInit() {
@@ -56,7 +59,9 @@ export class NavbarComponent implements OnInit {
     let user = userForm.form.value;
 
     let credentials = await this.authService.signIn({ email: user.email, password: user.password });
+    console.log(credentials);
 
+    
     if (credentials != undefined)
       this.currUser = credentials.user;
   }
