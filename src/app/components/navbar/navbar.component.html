@@ -15,8 +15,8 @@
             <button (click)="signInModal(signIn)">Sign In</button>
         }
         @else {
-            <a target="#">Account</a>
             <p>{{currUser.displayName}}</p>
+            <button (click)="signOut()" class="logout-btn">Sign Out</button>
         }
     </div>
 </nav>
@@ -35,7 +35,7 @@
 </dialog>
 
 
-<dialog class="modal" #signIn>
+<dialog class="modal" #signIn type="modal">
     <span class="close" #close>&times;</span>
     <form class="modal-content" #signInForm="ngForm" (ngSubmit)="login(signInForm)">
         <h1 class="title">Sign In</h1>

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
 // Temp solution
 import { FormsModule, NgForm } from '@angular/forms';
 import { OnInit } from '@angular/core'
+
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,9 @@ import { OnInit } from '@angular/core'
 })
 export class NavbarComponent implements OnInit {
   protected currUser: User | null;
+
+  @ViewChild("signIn") loginModal!: ElementRef;
+  @ViewChild("signUp") registerUserModal!: ElementRef;
 
   constructor(private authService: AuthService) {
     this.currUser = this.authService.getCurrUser();
@@ -35,7 +39,7 @@ export class NavbarComponent implements OnInit {
     })
   }
 
-  public signInModal(modal: HTMLDialogElement){
+  public signInModal(modal: HTMLDialogElement) {
     modal.showModal();
 
     modal.getElementsByClassName("close")[0].addEventListener("click", () => {
@@ -50,19 +54,27 @@ export class NavbarComponent implements OnInit {
 
     let credentials = await this.authService.signIn({ email: user.email, password: user.password });
 
+    this.registerUserModal.nativeElement.close()
     this.currUser = this.authService.getCurrUser();
-
-
+    location.reload();
   }
 
   public async login(userForm: NgForm) {
     let user = userForm.form.value;
 
     let credentials = await this.authService.signIn({ email: user.email, password: user.password });
-    console.log(credentials);
 
-    
-    if (credentials != undefined)
+
+    if (credentials != undefined) {
       this.currUser = credentials.user;
+      userForm.resetForm();
+      this.loginModal.nativeElement.close()
+      location.reload();
+    }
+  }
+
+  public async signOut(){
+    await this.authService.signOut();
+    location.reload();
   }
 }

@@ -2,7 +2,8 @@ import { Injectable } from "@angular/core";
 import { FirebaseApp } from "@angular/fire/app";
 import {
     Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, updateCurrentUser,
-    User, updateProfile
+    User, updateProfile,
+    browserSessionPersistence
 } from "@angular/fire/auth";
 import { FirestoreService } from "./firestore.service";
 
@@ -17,6 +18,7 @@ export class AuthService {
     constructor(private app: FirebaseApp) {
         // Initialize Firebase Authentication and get a reference to the service
         this.auth = getAuth(app);
+        this.auth.setPersistence(browserSessionPersistence);
         this.currUser = null;
     }
 
@@ -64,16 +66,17 @@ export class AuthService {
     }
 
     public async signIn(details: { email: string, password: string }) {
-        // return setPersistence(this.auth, browserSessionPersistence).then(() => {
         return signInWithEmailAndPassword(this.auth, details.email, details.password)
-            // .then((userCredential) => {
-            //     return userCredential.user;
-            // })
             .catch((error) => {
                 console.log(error);
                 return null;
             })
     }
-    // )
+
+
+    public async signOut(){
+        this.auth.signOut();
+    }
+
 }
-// }
+
