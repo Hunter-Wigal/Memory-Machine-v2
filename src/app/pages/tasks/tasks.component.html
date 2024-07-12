@@ -18,7 +18,7 @@
                             <td>{{task.title}}</td>
                             <td>{{task.date | date}}</td>
                             <td>{{task.date | date:'shortTime'}}</td>
-                            <td><button>Delete</button></td>
+                            <td><button (click)="deleteTask(task.id)">Delete</button></td>
                         </tr>
                         }
                     </tbody>
@@ -30,7 +30,7 @@
                     <input placeholder="Task name" ngModel name="title" required>
                     <input type="date" ngModel name="date" required>
                     <input type="time" ngModel name="time">
-                    <input type="submit">
+                    <input type="submit" name="submit" value="Submit" >
                 </form>
             </div>
         </div>

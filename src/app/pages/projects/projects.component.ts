@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { FormsModule, NgForm } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 export interface Project {
   projectName: string,
   numTasks: number,
-  priority: number
+  priority: number,
+  id?: string
 }
 
 @Component({
@@ -15,31 +17,26 @@ export interface Project {
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent {
   projects: Project[];
   priorityValid: boolean;
 
-  constructor(private fs: FirestoreService) {
+  constructor(private firestore: FirestoreService, private auth: AuthService) {
     this.projects = [];
     // this.projects.push({projectName: "Test", numTasks: 0, priority: 0});
 
-
+    // Load projects when auth state changes
+    this.auth.setUserFunc(async ()=>{await this.firestore.setuserDoc(); this.loadProjects()});
     this.priorityValid = true;
-  }
-
-  async ngOnInit() {
-    await new Promise(r => setTimeout(r, 1000)).then(async () => {
-      this.fs.setuserDoc().then(() => {
-        this.loadProjects();
-      })
-    });
   }
 
 
   loadProjects(): void {
-    this.fs.getProjects().then((docs) => {
+    this.firestore.getProjects().then((docs) => {
       this.projects = docs.map((doc) => {
-        return doc.data()['project'] as Project;
+        let project = <Project>doc.data()['project'];
+        project.id = doc.id;
+        return project;
       })
     })
   }
@@ -55,6 +52,13 @@ export class ProjectsComponent implements OnInit {
       return;
     }
 
-    this.fs.addProject({ projectName: projectName, numTasks: 0, priority: priority }).then(() => { this.loadProjects(); form.reset() });
+    this.firestore.addProject({ projectName: projectName, numTasks: 0, priority: priority }).then(() => { this.loadProjects(); form.reset() });
+  }
+
+  deleteProject(id: string = ""){
+    this.firestore.deleteProject(id).then((success)=>{
+      if(success)
+      this.loadProjects();
+    })
   }
 }

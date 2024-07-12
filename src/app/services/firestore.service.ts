@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { DocumentReference, Firestore, QueryDocumentSnapshot, addDoc, collection, doc, getDoc, getDocs } from "@angular/fire/firestore";
+import { DocumentReference, Firestore, QueryDocumentSnapshot, addDoc, collection, deleteDoc, doc, getDocs } from "@angular/fire/firestore";
 import { Task } from '../pages/tasks/tasks.component'
 import { Project } from "../pages/projects/projects.component";
 import { AuthService } from "./auth.service";
@@ -54,6 +54,21 @@ export class FirestoreService {
         // );
     }
 
+    async deleteTask(id: string | undefined){
+        if (id == undefined){
+            return new Promise(()=>{return false});
+        }
+
+        return deleteDoc(doc(this.db, this.userDoc.path, "tasks", id)).then(()=>{
+            window.alert("Successfully deleted task");
+            return true;
+        }).catch(()=>{
+            window.alert("Error with deleting task");
+            return false;
+        })
+
+    }
+
     getProjects() {
         let docs = getDocs(collection(this.db, this.userDoc.path, "projects")).then((response) => {
             return response.docs;
@@ -74,6 +89,16 @@ export class FirestoreService {
                 return false;
             }
         );
+    }
+
+    async deleteProject(id: string){
+        return deleteDoc(doc(this.db, this.userDoc.path, "projects", id)).then(()=>{
+            window.alert("Successfully deleted project");
+            return true;
+        }).catch(()=>{
+            window.alert("Error with deleting project");
+            return false;
+        })
     }
 
 }

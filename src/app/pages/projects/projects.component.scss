@@ -7,12 +7,13 @@
     background-color: white;
 }
 
+$column-num: 4;
 // Row container table headers
 .thead{
     background-color: lightgray;
     font-size: x-large;
     display: grid;
-    grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3);
+    grid-template-columns: calc(100%/$column-num) calc(100%/$column-num) calc(100%/$column-num) calc(100%/$column-num);
 }
 
 // Individual table headers
@@ -22,10 +23,11 @@
 }
 
 // Currently specific to projects page. Should generalize
+
 .table-row{
     display: grid;
     // Quick fix to thirds
-    grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3);
+    grid-template-columns: calc(100%/$column-num) calc(100%/$column-num) calc(100%/$column-num) calc(100%/$column-num);
 
 }
 

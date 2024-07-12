@@ -14,6 +14,7 @@ export interface Task {
   title: string;
   date: Date;
   time?: String;
+  id?: string;
 }
 
 
@@ -27,7 +28,7 @@ export interface Task {
 })
 
 
-export class TasksComponent implements OnInit {
+export class TasksComponent {
   @ViewChild('taskForm') taskForm!: NgForm;
 
 
@@ -37,7 +38,9 @@ export class TasksComponent implements OnInit {
   tasks: Task[] = [];
 
 
-  constructor(private firestore: FirestoreService, private auth: AuthService){
+  constructor(private firestore: FirestoreService, private auth: AuthService) {
+    // Load tasks when auth state changes
+    this.auth.setUserFunc(async ()=>{await this.firestore.setuserDoc(); this.updatetasks()});
   }
 
 
@@ -51,22 +54,10 @@ export class TasksComponent implements OnInit {
 
       for (let item of response.docs) {
         let data = item.data()['task']
-        let task = { title: data['title'], date: new Date(data['date'].seconds * 1000) }
+        let task = { title: data['title'], date: new Date(data['date'].seconds * 1000), id: item.id }
         this.tasks.push(task);
       }
     })
-  }
-
-  async ngOnInit() {
-    await new Promise(r => setTimeout(r, 1000)).then(async ()=>{
-      await this.firestore.setuserDoc();
-      this.updatetasks();
-    });
-    // Get a reference to the users doc, then update tasks
-
-
-    
-
   }
 
   addTask(newTask: Task) {
@@ -93,9 +84,14 @@ export class TasksComponent implements OnInit {
         window.alert("Failed to add new task");
       }
     })
+  }
 
-
-
+  deleteTask(id: string | undefined){
+      this.firestore.deleteTask(id).then((success)=>{
+        if (success){
+          this.updatetasks();
+        }
+      })
   }
 
 }
