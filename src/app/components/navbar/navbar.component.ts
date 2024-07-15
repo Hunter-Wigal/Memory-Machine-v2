@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
 // Temp solution
-import { FormsModule, NgForm } from '@angular/forms';
+import { NgForm, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OnInit } from '@angular/core';
 import {MatToolbar} from '@angular/material/toolbar';
 import { MatAnchor } from '@angular/material/button';
@@ -11,7 +11,7 @@ import { MatAnchor } from '@angular/material/button';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, MatToolbar, MatAnchor],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatToolbar, MatAnchor, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
