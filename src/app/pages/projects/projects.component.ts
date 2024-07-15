@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { MatButton } from '@angular/material/button';
 
 export interface Project {
   projectName: string,
@@ -13,7 +14,7 @@ export interface Project {
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MatButton],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })

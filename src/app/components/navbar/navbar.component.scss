@@ -1,11 +1,11 @@
-nav{
-    background-color: rgb(211, 211, 211);
-    width: 100%;
-    height: 10%;
-    margin: 0px;
-    display: flex;
-    align-items: center;
-}
+// nav{
+//     // background-color: rgb(211, 211, 211);
+//     width: 100%;
+//     height: 10%;
+//     margin: 0px;
+//     display: flex;
+//     align-items: center;
+// }
 
 .logo{
     width: 48px;
@@ -22,11 +22,18 @@ nav{
     margin-left: 2%;
     // color: white;
     font-size: 18px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    width: 25%;
+
 }
 
 .links > a{
     margin-left: 5%;
     text-decoration: none;
+    position: relative;
+    display: block;
 }
 
 .links > a:hover{
@@ -34,11 +41,11 @@ nav{
 }
 
 .active{
-    font-size: 30px;
+    // font-size: 30px;
     border-left: 1px solid black;
     border-right: 1px solid black;
     padding: 2% 5%;
-    background-color: cyan;
+    // background-color: get-theme-color($theme, );
 }
 
 .title:hover{
