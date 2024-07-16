@@ -20,33 +20,34 @@
 
 .links{
     margin-left: 2%;
-    // color: white;
+    // // color: white;
     font-size: 18px;
-    justify-content: space-between;
-    align-items: center;
+    // justify-content: space-between;
+    // align-items: center;
     display: flex;
-    width: 25%;
+    width: 40%;
 
 }
 
 .links > a{
-    margin-left: 5%;
-    text-decoration: none;
-    position: relative;
-    display: block;
+    // margin-left: 5%;
+    // text-decoration: none;
+    // position: relative;
+    // display: block;
+    width: fit-content;
 }
 
 .links > a:hover{
     color: white;
 }
 
-.active{
-    // font-size: 30px;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    padding: 2% 5%;
-    // background-color: get-theme-color($theme, );
-}
+// .active{
+//     // font-size: 30px;
+//     border-left: 1px solid black;
+//     border-right: 1px solid black;
+//     padding: 2% 5%;
+//     // background-color: get-theme-color($theme, );
+// }
 
 .title:hover{
     color: white;

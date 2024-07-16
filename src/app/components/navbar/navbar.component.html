@@ -2,12 +2,14 @@
     <img routerLink="/home" class="logo">
     <h3 routerLink="/home" class="title">Memory Machine 2.0</h3>
 
-    <div class="links">
-        <mat-anchor routerLink="/tasks" routerLinkActive="active">Tasks</mat-anchor>
-        <mat-anchor routerLink="/calendar" routerLinkActive="active" >Calendar</mat-anchor>
-        <mat-anchor routerLink="/schedule" routerLinkActive="active" >Schedule</mat-anchor>
-        <mat-anchor routerLink="/projects" routerLinkActive="active" >Projects</mat-anchor>
-    </div>
+    <mat-nav-list class="links">
+        <a mat-list-item routerLink="/tasks" routerLinkActive="active" [activated]="router.isActive('/tasks', true)">Tasks</a>
+        <a mat-list-item routerLink="/calendar" routerLinkActive="active" [activated]="router.isActive('/calendar', true)">Calendar</a>
+        <a mat-list-item routerLink="/schedule" routerLinkActive="active" [activated]="router.isActive('/schedule', true)">Schedule</a>
+        <a mat-list-item routerLink="/projects" routerLinkActive="active" [activated]="router.isActive('/projects', true)">Projects</a>
+    </mat-nav-list>
+      
+      
 
     <div class="account">
         @if(currUser == null){
