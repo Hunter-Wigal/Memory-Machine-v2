@@ -65,6 +65,33 @@
     margin-top: 0;
 }
 
+.account-icon{
+    width: 48px;
+    height: 48px;
+    font-size: 48px;
+}
+
+.account-button{
+    background-color: none;
+    background: 0;
+    border: 0;
+    color: white;
+    cursor: pointer;
+}
+
+.account-dropdown{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    right: 0;
+    translate: 20%;
+    background-color: whitesmoke;
+    color: black;
+    padding: 5% 30%;
+}
+
 .logout-btn{
-    margin-top: 0;
+    height: 80%;
+    justify-self: center;
+    display: block;
 }

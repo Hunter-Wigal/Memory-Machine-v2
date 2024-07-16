@@ -3,22 +3,36 @@
     <h3 routerLink="/home" class="title">Memory Machine 2.0</h3>
 
     <mat-nav-list class="links">
-        <a mat-list-item routerLink="/tasks" routerLinkActive="active" [activated]="router.isActive('/tasks', true)">Tasks</a>
-        <a mat-list-item routerLink="/calendar" routerLinkActive="active" [activated]="router.isActive('/calendar', true)">Calendar</a>
-        <a mat-list-item routerLink="/schedule" routerLinkActive="active" [activated]="router.isActive('/schedule', true)">Schedule</a>
-        <a mat-list-item routerLink="/projects" routerLinkActive="active" [activated]="router.isActive('/projects', true)">Projects</a>
+        <a mat-list-item routerLink="/tasks" routerLinkActive="active"
+            [activated]="router.isActive('/tasks', true)">Tasks</a>
+        <a mat-list-item routerLink="/calendar" routerLinkActive="active"
+            [activated]="router.isActive('/calendar', true)">Calendar</a>
+        <a mat-list-item routerLink="/schedule" routerLinkActive="active"
+            [activated]="router.isActive('/schedule', true)">Schedule</a>
+        <a mat-list-item routerLink="/projects" routerLinkActive="active"
+            [activated]="router.isActive('/projects', true)">Projects</a>
     </mat-nav-list>
-      
-      
+
+
 
     <div class="account">
         @if(currUser == null){
-            <button (click)="registerModal(signUp)">Sign Up</button>
-            <button (click)="signInModal(signIn)">Sign In</button>
+        <button (click)="registerModal(signUp)">Sign Up</button>
+        <button (click)="signInModal(signIn)">Sign In</button>
         }
         @else {
-            <p>{{currUser.displayName}}</p>
-            <button (click)="signOut()" class="logout-btn">Sign Out</button>
+        <!-- <p>{{currUser.displayName}}</p>
+            <button (click)="signOut()" class="logout-btn">Sign Out</button> -->
+        <!-- <mat-icon svgIcon="account" aria-hidden="false" aria-label="Account profile icon"></mat-icon> -->
+        <button class="account-button" (click)="accountDropdown(dropdown)"><mat-icon class="account-icon" fontIcon="account_circle" aria-hidden="false"
+                aria-label="Account profile icon"></mat-icon>
+                <mat-icon style="margin-left: 0; position: absolute; bottom: 0; translate: -10px -5px;" fontIcon="arrow_drop_down" aria-hidden="false"
+                aria-label="Account profile icon"></mat-icon>
+        </button>
+        <div class="account-dropdown" #dropdown id="account-dropdown">
+            <h4>{{currUser.displayName}}</h4>
+            <button mat-raised-button (click)="signOut()" class="logout-btn">Sign Out</button>
+        </div>
         }
     </div>
 </mat-toolbar>
