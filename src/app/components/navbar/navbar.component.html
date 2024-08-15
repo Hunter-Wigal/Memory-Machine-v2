@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="mat-elevation-z5 navbar">
     <img routerLink="/home" class="logo">
     <h3 routerLink="/home" class="title">Memory Machine 2.0</h3>
 
@@ -17,8 +17,8 @@
 
     <div class="account">
         @if(currUser == null){
-        <button (click)="registerModal(signUp)">Sign Up</button>
-        <button (click)="signInModal(signIn)">Sign In</button>
+        <button mat-raised-button (click)="registerModal(signUp)">Sign Up</button>
+        <button mat-stroked-button (click)="signInModal(signIn)">Sign In</button>
         }
         @else {
         <!-- <p>{{currUser.displayName}}</p>

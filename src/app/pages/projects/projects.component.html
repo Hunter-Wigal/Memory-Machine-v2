@@ -1,39 +1,78 @@
 <div class="container">
-    <div class="table">
-        <div class="thead">
-            <div class="th">
-                Project Name
-            </div>
-            <div class="th middle">
-                Number of Tasks
-            </div>
-            <div class="th middle">
-                Priority
-            </div>
-            <div class="th">
-                Delete
-            </div>
-        </div>
-        <div class="content">
-            @for(project of projects; track $index)
-            {
-            <div class="table-row">
-                <div class="table-cell">{{project.projectName}}</div>
-                <div class="table-cell middle">{{project.numTasks}}</div>
-                <div class="table-cell middle">{{project.priority}}</div>
-                <div class="table-cell"><button mat-raised-button (click)="deleteProject(project.id)">Delete</button></div>
-            </div>
-            }
-        </div>
+  <table mat-table>
+    <thead>
+      <th>Project Name</th>
+      <th>Number of Tasks</th>
+      <th>Priority</th>
+      <th>Delete</th>
+    </thead>
+    <tbody>
+      @for(project of projects; track $index) {
+      <tr>
+        <td class="table-cell">{{ project.projectName }}</td>
+        <td class="table-cell middle">{{ project.numTasks }}</td>
+        <td class="table-cell middle">{{ project.priority }}</td>
+        <td class="table-cell">
+          <button mat-raised-button (click)="deleteProject(project.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <!-- TODO Add validation -->
+  <form
+    class="input-container"
+    #projectForm="ngForm"
+    (ngSubmit)="submitProject(projectForm)"
+  >
+    <input placeholder="Enter Project Name" name="projectName" ngModel />
+    <input
+      placeholder="Enter Priority"
+      type="number"
+      value="0"
+      name="priority"
+      ngModel
+    />
+    <input type="submit" value="Submit" id="submit-btn" />
+    @if(!priorityValid){
+    <div class="invalid" style="grid-column: 2">
+      Please enter a valid priority number
     </div>
-        <!-- TODO Add validation -->
-    <form class="input-container" #projectForm="ngForm" (ngSubmit)="submitProject(projectForm)">
-        <input placeholder="Enter Project Name" name="projectName" ngModel>
-        <input placeholder="Enter Priority" type="number" value="0" name="priority" ngModel>
-        <input type="submit" value="Submit" id="submit-btn">
-        @if(!priorityValid){
-        <div class="invalid" style="grid-column: 2;">Please enter a valid priority number</div>
-        }
-    </form>
+    }
+  </form>
+  <div class="project-table mat-tertiary danger">
+    <table mat-table [dataSource]="projects">
+      <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
 
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let project">{{ project.projectName }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let project">{{ project.numTasks }}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef>Weight</th>
+        <td mat-cell *matCellDef="let project">{{ project.priority }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <mat-slide-toggle class="toggle">Toggle me!</mat-slide-toggle>
+  <mat-checkbox class="tertiary-checkbox" />
+  <section class="tertiary-checkbox">
+    <mat-checkbox />
+  </section>
 </div>

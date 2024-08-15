@@ -3,6 +3,9 @@ import { FirestoreService } from '../../services/firestore.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MatButton } from '@angular/material/button';
+import { MatTable, MatTableModule } from '@angular/material/table'
+import { MatSlideToggle} from '@angular/material/slide-toggle';
+import { MatCheckbox} from '@angular/material/checkbox';
 
 export interface Project {
   projectName: string,
@@ -14,13 +17,14 @@ export interface Project {
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [FormsModule, MatButton],
+  imports: [FormsModule, MatButton, MatTable, MatTableModule, MatSlideToggle, MatCheckbox],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
 export class ProjectsComponent {
   projects: Project[];
   priorityValid: boolean;
+  displayedColumns: string[] = ['position', 'name', 'weight'];
 
   constructor(private firestore: FirestoreService, private auth: AuthService) {
     this.projects = [];

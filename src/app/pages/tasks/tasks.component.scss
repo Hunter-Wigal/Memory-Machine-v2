@@ -1,53 +1,74 @@
-$table-width: 75%;
+$table-width: 90%;
 
-div{
-    color: red;
+div {
+  color: red;
 }
 
-.container{
-    display: flexbox;
-    width: 100;
-    position: relative;
+.container {
+  display: flexbox;
+  width: 100;
+  position: relative;
 }
 
-.row{
-    position: relative;
-    display: flex;
-    flex-direction: row;
+.row {
+  position: relative;
+  display: flex;
+  flex-direction: row;
 }
 
-.col{
-    position: inherit;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid black;
+.col {
+  position: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
-.assignment-table{
-    background-color: white;
-    margin: auto;
-    margin-top: 3%;
-    width: $table-width;
+.task-form {
+  position: relative;
+  display: flex;
+  width: $table-width;
+  margin-inline: auto;
+  margin-top: 2%;
+  height: 80%;
 }
 
-.assignment-table > thead{
-    background-color: black;
-    color: white;
-    font-size: 30px;
+.task-form input {
+  width: 25%;
 }
 
-th, td{
-    padding-inline: 5%;
+.task-table {
+  margin-top: 5%;
+  display: block;
+  width: $table-width !important;
+  min-width: $table-width !important;
+  margin-inline: auto;
 }
 
-.task-form{
-    position: relative;
-    display: flex;
-    width: $table-width;
-    margin: auto;
-    border: 1px solid black;
+.mat-column-title {
+  // width: 50%;
 }
 
-.task-form input{
-    width: 25%;
+.mat-column-date {
+  min-width: 15%;
+}
+
+.mat-column-time {
+  width: 10%;
+}
+
+.mat-column-delete {
+  width: 10%;
+  text-align: center;
+}
+
+.task-form mat-form-field {
+  margin-inline: 0.5%;
+  // width: 100%;
+}
+
+.task-form button{
+  margin-top: 1%;
+}
+
+.task-form mat-form-field input {
+  width: 100%;
 }

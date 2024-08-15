@@ -6,29 +6,34 @@ import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 
 export const routes: Routes = [
-    {
-        path: "home",
-        component: HomeComponent
-    },
-    {
-        path: '',
-        redirectTo: "/home",
-        pathMatch: 'full'
-    },
-    {
-        path: 'tasks',
-        component: TasksComponent
-    },
-    {
-        path: 'calendar',
-        component: CalendarComponent
-    },
-    {
-        path: 'schedule',
-        component: ScheduleComponent
-    },
-    {
-        path: 'projects',
-        component: ProjectsComponent
-    },
+  {
+    path: '',
+    component: HomeComponent,
+    data: { title: 'Home' },
+  },
+  {
+    path: 'home',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
+  {
+    path: 'tasks',
+    component: TasksComponent,
+    data: { title: 'Tasks' },
+  },
+  {
+    path: 'calendar',
+    component: CalendarComponent,
+    data: { title: 'Calendar' },
+  },
+  {
+    path: 'schedule',
+    component: ScheduleComponent,
+    data: { title: 'Schedule' },
+  },
+  {
+    path: 'projects',
+    component: ProjectsComponent,
+    data: { title: 'Projects' },
+  },
 ];
