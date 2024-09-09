@@ -12,13 +12,14 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), 
+  providers: [provideRouter(routes),
     provideClientHydration(),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore() ),
     provideAnalytics(() => getAnalytics()),
     provideAnimationsAsync(), provideAnimationsAsync(),
-  ]
+  ],
+  
 };
 

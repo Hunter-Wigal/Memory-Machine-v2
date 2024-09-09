@@ -1,5 +1,12 @@
 import { Time } from '@angular/common';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  model,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Timestamp, addDoc } from 'firebase/firestore';
@@ -10,7 +17,6 @@ import {
   FormsModule,
   NgForm,
 } from '@angular/forms';
-import { CalendarComponent } from '../../pages/calendar/calendar.component';
 import { After } from 'v8';
 import { AuthService } from '../../services/auth.service';
 import {
@@ -23,6 +29,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { AngularMaterialModule } from '../../material.module';
+import { MatCardModule } from '@angular/material/card';
+import { CalendarComponent } from "../../components/calendar/calendar.component";
 
 // Temp class
 export interface Task {
@@ -37,21 +46,25 @@ export interface Task {
   standalone: true,
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss',
+  providers: [],
   imports: [
     DatePipe,
     FormsModule,
-    CalendarComponent,
     MatTableModule,
     MatButtonModule,
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-  ],
+    MatCardModule,
+    CalendarComponent
+],
 })
 export class TasksComponent {
   @ViewChild('taskForm') taskForm!: NgForm;
   @ViewChild('matTable') table!: MatTable<any>;
   @ViewChild(MatSort) sort!: MatSort;
+
+  selected = model<Date | null>(null);
 
   dataSource = new MatTableDataSource<Task>();
 
@@ -91,9 +104,8 @@ export class TasksComponent {
   }
 
   addTask(newTask: Task) {
-
     let taskDate = new Date(newTask.date);
-    taskDate.setDate(taskDate.getUTCDate())
+    taskDate.setDate(taskDate.getUTCDate());
 
     // Extract the hours and minutes from the string. Easiest way to do it
     if (newTask.time != undefined && newTask.time != '') {

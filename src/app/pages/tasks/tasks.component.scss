@@ -6,7 +6,7 @@ div {
 
 .container {
   display: flexbox;
-  width: 100;
+  width: 100%;
   position: relative;
 }
 
@@ -43,10 +43,6 @@ div {
   margin-inline: auto;
 }
 
-.mat-column-title {
-  // width: 50%;
-}
-
 .mat-column-date {
   min-width: 15%;
 }
@@ -65,10 +61,20 @@ div {
   // width: 100%;
 }
 
-.task-form button{
+.task-form button {
   margin-top: 1%;
 }
 
 .task-form mat-form-field input {
   width: 100%;
+}
+
+.col {
+  width: 50%;
+}
+
+.calendar {
+  margin: auto;
+  margin-top: 3%;
+  width: 50%;
 }

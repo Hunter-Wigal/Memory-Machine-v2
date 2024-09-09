@@ -1,0 +1,37 @@
+<!-- <div class="container">
+  <table class="calendar">
+    <thead>
+      <tr>
+        <th colspan="7">{{ monthName }}</th>
+      </tr>
+      <tr>
+        <td>Sunday</td>
+        <td>Monday</td>
+        <td>Tuesday</td>
+        <td>Wednesday</td>
+        <td>Thursday</td>
+        <td>Friday</td>
+        <td>Saturday</td>
+      </tr>
+    </thead>
+    <tbody class="body">
+      @for (row of rows; track $index) {
+      <tr class="body">
+        @for(day of row; track $index) {
+        <td class="cal-row">
+          @if (day != 0) {
+          {{ day }}
+          }
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+</div> -->
+
+<mat-card>
+  <!-- Look into solving the skip hydration issue -->
+  <mat-calendar ngSkipHydration class="test" [(selected)]="selected"></mat-calendar>
+</mat-card>
+<p>Selected date: {{ selected() }}</p>

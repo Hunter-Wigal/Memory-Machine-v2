@@ -1,61 +1,64 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 $theme: mat.define-theme();
 
-
 .table {
-    display: flex;
-    flex-direction: column;
-    width: 75%;
-    border: 1px solid black;
-    margin: 5% auto;
-    background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  border: 1px solid black;
+  margin: 5% auto;
+  background-color: white;
 }
 
 // $theme: mat.define-theme();
 
 .project-table {
-    width: 75%;
-    // @include mat.all-component-colors($dark-theme);
+  width: 75%;
+  margin-inline: auto;
+  margin-top: 3%;
+  // @include mat.all-component-colors($dark-theme);
 }
 
-.th{
-    // @include mat.table-color($theme, $primary);
+.th {
+  // @include mat.table-color($theme, $primary);
 }
 
 $column-num: 4;
 
 // Row container table headers
 .thead {
-    background-color: lightgray;
-    font-size: x-large;
-    display: grid;
-    grid-template-columns: calc(100%/$column-num) calc(100%/$column-num) calc(100%/$column-num) calc(100%/$column-num);
+  background-color: lightgray;
+  font-size: x-large;
+  display: grid;
+  grid-template-columns:
+    calc(100% / $column-num) calc(100% / $column-num) calc(100% / $column-num)
+    calc(100% / $column-num);
 }
 
 // Individual table headers
 .th {
-    display: inline-block;
-    text-align: center;
+  display: inline-block;
+  text-align: center;
 }
 
 // Currently specific to projects page. Should generalize
 
 .table-row {
-    display: grid;
-    // Quick fix to thirds
-    grid-template-columns: calc(100%/$column-num) calc(100%/$column-num) calc(100%/$column-num) calc(100%/$column-num);
-
+  display: grid;
+  // Quick fix to thirds
+  grid-template-columns:
+    calc(100% / $column-num) calc(100% / $column-num) calc(100% / $column-num)
+    calc(100% / $column-num);
 }
 
 $cell-padding: 0.3rem;
 
 .table-cell {
-    text-align: center;
-    border-bottom: 1px solid darkgray;
-    padding: $cell-padding 0 $cell-padding 0;
+  text-align: center;
+  border-bottom: 1px solid darkgray;
+  padding: $cell-padding 0 $cell-padding 0;
 }
-
 
 // .content .table-row:nth-child(2){
 //     background-color: white;
@@ -64,32 +67,52 @@ $cell-padding: 0.3rem;
 
 // Temporary  solution, find something better
 .middle {
-    border-left: 1px solid rgb(239, 15, 217);
-    border-right: 1px solid rgb(239, 15, 217);
+  border-left: 1px solid rgb(239, 15, 217);
+  border-right: 1px solid rgb(239, 15, 217);
 }
 
-.input-container {
-    display: grid;
-    width: 75%;
-    grid-template-columns: calc(100%/3) calc(100%/3) 10%;
-    margin: auto;
-}
+
 
 #submit-btn {
-    padding-inline: 0.25rem;
+  padding-inline: 0.25rem;
 }
 
 .invalid {
-    background-color: rgba(230, 37, 37, 0.722);
-    color: black;
+  background-color: rgba(230, 37, 37, 0.722);
+  color: black;
 }
 
-
-.toggle{
+.toggle {
   @include mat.slide-toggle-color($theme, $color-variant: primary);
 }
 
-
 .tertiary-checkbox {
   @include mat.checkbox-color($theme, $color-variant: error);
+}
+
+.danger {
+  color: red;
+}
+
+.input-container {
+  display: grid;
+  width: 75%;
+  grid-template-columns: calc(100% / 3) calc(100% / 3) 10%;
+  margin-inline: auto;
+  margin-top: 3%;
+  align-items: center;
+}
+
+.name-input {
+  width: 75%;
+  margin-right: 1%;
+}
+
+.priority-input {
+  width: 50%;
+
+}
+
+.submit {
+  height: 75%;
 }

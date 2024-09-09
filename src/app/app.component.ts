@@ -9,6 +9,7 @@ import { TestNavComponent } from "./components/test-nav/test-nav.component";
 import { Title } from '@angular/platform-browser';
 import { map, filter } from 'rxjs';
 import { MatSortModule } from '@angular/material/sort';
+import { AngularMaterialModule } from './material.module';
 
 @Component({
   selector: 'app-root',
@@ -21,8 +22,9 @@ import { MatSortModule } from '@angular/material/sort';
     FooterComponent,
     FormsModule,
     TestNavComponent,
-    MatSortModule,
+    MatSortModule
   ],
+
 })
 export class AppComponent {
   title = 'memory_machine_app';
