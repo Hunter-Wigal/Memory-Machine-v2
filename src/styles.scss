@@ -9,7 +9,8 @@ $theme: mat.define-theme((
   ),
   typography: (
     brand-family: 'Comic Sans',
-    bold-weight: 900
+    bold-weight: 900,
+
   ),
   density: (
     scale: -1
@@ -20,12 +21,10 @@ $theme: mat.define-theme((
 html {
   @include mat.all-component-themes($theme);
   @include mat.core-color($theme);
-
 }
 
 
 body {
-  background-color: silver;
   margin: 0;
 }
 
@@ -44,7 +43,7 @@ body {
 
 .col {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .modal {
@@ -89,12 +88,11 @@ dialog[open] {
   top: 0;
   text-align: center;
 }
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .center-text{
   text-align: center;
+}
+
+.danger{
+  color: mat.get-theme-color($theme, error);
 }

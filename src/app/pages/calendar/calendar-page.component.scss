@@ -1,43 +1,31 @@
 @use "sass:math";
 
+.center{
+  justify-content: center;
+}
 
-// .calendar {
-//   background-color: white;
-//   width: 75%;
-//   text-align: center;
-//   margin: auto;
-//   margin-top: 5%;
-//   border-collapse: collapse;
-//   max-width: 750px;
+.line{
+  width: 100%;
+}
 
-//   td{
-//     width: math.percentage(math.div(1, 7));
-//   }
-// }
+.calendar-col{
+  display: block;
+  margin-inline: auto;
+  width: 40%;
+}
 
-// .calendar th {
-//   background-color: black;
-//   color: white;
-// }
+.events-col{
+  border: 1px solid white;
+  border-radius: 5%;
+  margin-inline: 5%;
+  display: flex;
+  width: 40%;
+}
 
-// .calendar thead th:only-child {
-//   font-size: 30px;
-//   column-span: all;
-// }
+.events{
+  flex-direction: col;
+}
 
-// .calendar thead th {
-//   margin-inline: 1%;
-// }
-
-// .body tr td{
-//   border-collapse: collapse;
-//   border: 1px solid black;
-//   // border-bottom: 1px solid black;
-//   color: black;
-
-// }
-
-
-.test{
-  width: 25%;
+.container{
+  margin-top: 2%;
 }
