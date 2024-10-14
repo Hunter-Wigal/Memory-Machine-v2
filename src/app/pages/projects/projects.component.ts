@@ -7,6 +7,7 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface Project {
   projectName: string;
@@ -26,6 +27,7 @@ export interface Project {
     MatSlideToggle,
     MatCheckbox,
     MatInputModule,
+    MatIconModule
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
@@ -33,7 +35,7 @@ export interface Project {
 export class ProjectsComponent {
   projects: Project[];
   priorityValid: boolean;
-  displayedColumns: string[] = ['name', 'tasks', 'priority'];
+  displayedColumns: string[] = ['name', 'tasks', 'priority', 'taskButton'];
 
   constructor(private firestore: FirestoreService, private auth: AuthService) {
     this.projects = [];
@@ -55,7 +57,7 @@ export class ProjectsComponent {
         return project;
       });
 
-    
+
     });
   }
 
@@ -82,5 +84,30 @@ export class ProjectsComponent {
     this.firestore.deleteProject(id).then((success) => {
       if (success) this.loadProjects();
     });
+  }
+
+  showTasks(projectID: string){
+    let td = document.getElementById(projectID);
+    if(!td) return;
+
+    let parent = td.parentElement;
+    if(!parent) return;
+
+    console.log(parent.childElementCount);
+
+    let newRow = document.createElement("h1");
+    newRow.innerHTML = "test"
+    const pos: InsertPosition = "afterend";
+    parent.insertAdjacentElement(pos, newRow);
+  }
+
+
+  async addTask(taskName: string, projectID: string){
+    let projectTasks = await this.firestore.getProjectTasks(projectID);
+    // console.log(projectTasks.docs);
+
+    for(let doc of projectTasks.docs){
+      console.log(doc.data());
+    }
   }
 }

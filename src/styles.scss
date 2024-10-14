@@ -1,28 +1,31 @@
 @use "@angular/material" as mat;
 @include mat.core();
 
-$theme: mat.define-theme((
-  color: (
-    theme-type: dark,
-    primary: mat.$cyan-palette,
-    tertiary: mat.$orange-palette,
-  ),
-  typography: (
-    brand-family: 'Comic Sans',
-    bold-weight: 900,
+:root {
+  --mat-app-background-color: #101414;
+}
 
-  ),
-  density: (
-    scale: -1
+$theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: mat.$cyan-palette,
+      tertiary: mat.$orange-palette,
+    ),
+    typography: (
+      brand-family: "Comic Sans",
+      bold-weight: 900,
+    ),
+    density: (
+      scale: -1,
+    ),
   )
-));
-
+);
 
 html {
   @include mat.all-component-themes($theme);
   @include mat.core-color($theme);
 }
-
 
 body {
   margin: 0;
@@ -89,10 +92,10 @@ dialog[open] {
   text-align: center;
 }
 
-.center-text{
+.center-text {
   text-align: center;
 }
 
-.danger{
+.danger {
   color: mat.get-theme-color($theme, error);
 }

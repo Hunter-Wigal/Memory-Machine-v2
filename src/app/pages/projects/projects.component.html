@@ -45,6 +45,22 @@
         <td mat-cell *matCellDef="let project">{{ project.priority }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="taskButton">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let project" width="1%" id="{{project.id}}">
+          <button mat-button (click)="showTasks(project.id)" style="width: fit-content">
+            <mat-icon
+              style="margin:auto; width: 100%;"
+              aria-hidden="false"
+              aria-label="dropdown_arrow"
+              fontIcon="arrow_drop_down"
+            />
+          </button>
+        </td>
+
+        <!-- <td mat-cell *matCellDef="let project"><button mat-button (click) = "addTask('', project.id)">Add Task</button></td> -->
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>

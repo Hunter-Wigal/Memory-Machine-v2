@@ -115,4 +115,8 @@ export class FirestoreService {
         return false;
       });
   }
+
+  async getProjectTasks(projectID: string){
+    return getDocs(collection(this.db, this.userDoc.path, `projects/${projectID}/projectTasks`));
+  }
 }
