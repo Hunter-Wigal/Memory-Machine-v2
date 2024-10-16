@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -8,12 +8,14 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { DocumentData, getDocs } from '@angular/fire/firestore';
 
 export interface Project {
   projectName: string;
   numTasks: number;
   priority: number;
-  id?: string;
+  id: string;
+  tasks: Array<DocumentData>;
 }
 
 @Component({
@@ -27,7 +29,7 @@ export interface Project {
     MatSlideToggle,
     MatCheckbox,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
@@ -50,14 +52,21 @@ export class ProjectsComponent {
   }
 
   loadProjects(): void {
-    this.firestore.getProjects().then((docs) => {
+    this.firestore.getProjects().then(async (docs) => {
       this.projects = docs.map((doc) => {
         let project = <Project>doc.data()['project'];
         project.id = doc.id;
+
         return project;
       });
-
-
+      for (let project of this.projects) {
+        this.firestore.getProjectTasks(project.id).then((tasks) => {
+          project.tasks = tasks.docs.map((doc) => {
+            return doc.data();
+          });
+          console.log(project.tasks);
+        });
+      }
     });
   }
 
@@ -73,7 +82,13 @@ export class ProjectsComponent {
     }
 
     this.firestore
-      .addProject({ projectName: projectName, numTasks: 0, priority: priority })
+      .addProject({
+        projectName: projectName,
+        numTasks: 0,
+        priority: priority,
+        id: '',
+        tasks: [],
+      })
       .then(() => {
         this.loadProjects();
         form.reset();
@@ -86,27 +101,19 @@ export class ProjectsComponent {
     });
   }
 
-  showTasks(projectID: string){
-    let td = document.getElementById(projectID);
-    if(!td) return;
+  showTasks(projectID: string) {
+    let newRow = document.getElementById('tasks-' + projectID);
 
-    let parent = td.parentElement;
-    if(!parent) return;
+    if (!newRow) return;
 
-    console.log(parent.childElementCount);
-
-    let newRow = document.createElement("h1");
-    newRow.innerHTML = "test"
-    const pos: InsertPosition = "afterend";
-    parent.insertAdjacentElement(pos, newRow);
+    newRow.style.display = newRow.style.display === 'none' ? '' : 'none';
   }
 
-
-  async addTask(taskName: string, projectID: string){
+  async addTask(taskName: string, projectID: string) {
     let projectTasks = await this.firestore.getProjectTasks(projectID);
     // console.log(projectTasks.docs);
 
-    for(let doc of projectTasks.docs){
+    for (let doc of projectTasks.docs) {
       console.log(doc.data());
     }
   }

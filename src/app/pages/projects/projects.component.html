@@ -22,7 +22,7 @@
     </tbody>
   </table> -->
   @if(projects.length > 0){
-  <div class="project-table mat-tertiary danger">
+  <div class="project-table mat-tertiary">
     <table mat-table [dataSource]="projects">
       <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
@@ -47,10 +47,14 @@
 
       <ng-container matColumnDef="taskButton">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let project" width="1%" id="{{project.id}}">
-          <button mat-button (click)="showTasks(project.id)" style="width: fit-content">
+        <td mat-cell *matCellDef="let project" width="1%" id="{{ project.id }}">
+          <button
+            mat-button
+            (click)="showTasks(project.id)"
+            style="width: fit-content"
+          >
             <mat-icon
-              style="margin:auto; width: 100%;"
+              style="margin: auto; width: 100%"
               aria-hidden="false"
               aria-label="dropdown_arrow"
               fontIcon="arrow_drop_down"
@@ -64,9 +68,50 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+
+    <table class="mat-table">
+      <thead>
+        <tr>
+          <th>Project Name</th>
+          <th>Number of Tasks</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(project of projects; track project){
+        <tr>
+          <td>{{ project.projectName }}</td>
+          <td>{{ project.numTasks }}</td>
+          <td>{{ project.priority }}</td>
+          <td align="right" id="{{ project.id }}">
+            <button
+              mat-button
+              (click)="showTasks(project.id)"
+              style="width: fit-content"
+            >
+              <mat-icon
+                style="margin: auto; width: 100%"
+                aria-hidden="false"
+                aria-label="dropdown_arrow"
+                fontIcon="arrow_drop_down"
+              />
+            </button>
+          </td>
+        </tr>
+        <tr id="tasks-{{ project.id }}" style="display: none">
+          @for(task of project.tasks; track $index){
+          <!-- <tr width="100%"> -->
+            <td colspan="all">{{ task["name"] }}</td>
+          <!-- </tr> -->
+          }
+        </tr>
+        }
+      </tbody>
+    </table>
   </div>
+
   } @else {
-  <h1 class="danger">
+  <h1 class="no-projects">
     No projects to display. Use the input below to add some!
   </h1>
   }

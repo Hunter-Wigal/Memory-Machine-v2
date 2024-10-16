@@ -2,16 +2,10 @@
 
 $theme: mat.define-theme();
 
-.table {
-  display: flex;
-  flex-direction: column;
-  width: 75%;
-  border: 1px solid black;
-  margin: 5% auto;
-  background-color: white;
+table {
+  border-collapse: collapse;
 }
 
-// $theme: mat.define-theme();
 
 .project-table {
   width: 75%;
@@ -20,58 +14,34 @@ $theme: mat.define-theme();
   // @include mat.all-component-colors($dark-theme);
 }
 
-// .th {
-  // @include mat.table-color($theme, $primary);
-// }
 
-$column-num: 4;
-
-// Row container table headers
-.thead {
-  background-color: lightgray;
-  font-size: x-large;
-  display: grid;
-  grid-template-columns:
-    calc(100% / $column-num) calc(100% / $column-num) calc(100% / $column-num)
-    calc(100% / $column-num);
+.test-row{
+  color: blue !important;
+  // margin-top: 10rem;
 }
 
-// Individual table headers
-.th {
-  display: inline-block;
-  text-align: center;
+.mat-table{
+  margin-top: 2%;
+
+  width: 100%;
+  text-align: left;
+  border-width: 2px;
+  border-style: solid;
+  background-color: var(--mat-table-background-color);
+  column-count: auto;
+
+
+  tr{
+    border-bottom-color: var(--mat-table-row-item-outline-color);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    height: 3rem;
+  }
+
+  td,th{
+    padding: 0 1%;
+  }
 }
-
-// Currently specific to projects page. Should generalize
-
-.table-row {
-  display: grid;
-  // Quick fix to thirds
-  grid-template-columns:
-    calc(100% / $column-num) calc(100% / $column-num) calc(100% / $column-num)
-    calc(100% / $column-num);
-}
-
-$cell-padding: 0.3rem;
-
-.table-cell {
-  text-align: center;
-  border-bottom: 1px solid darkgray;
-  padding: $cell-padding 0 $cell-padding 0;
-}
-
-// .content .table-row:nth-child(2){
-//     background-color: white;
-//     color: black;
-// }
-
-// Temporary  solution, find something better
-.middle {
-  border-left: 1px solid rgb(239, 15, 217);
-  border-right: 1px solid rgb(239, 15, 217);
-}
-
-
 
 #submit-btn {
   padding-inline: 0.25rem;
@@ -90,8 +60,14 @@ $cell-padding: 0.3rem;
   @include mat.checkbox-color($theme, $color-variant: error);
 }
 
-.danger {
+.no-projects {
   color: red;
+  // text-align: center;
+  margin-left: 20%;
+  margin-top: 7.5%;
+  margin-bottom: 5%;
+  // width: 100%;
+  height: 100%;
 }
 
 .input-container {
