@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -38,35 +38,88 @@ export class ProjectsComponent {
   projects: Project[];
   priorityValid: boolean;
   displayedColumns: string[] = ['name', 'tasks', 'priority', 'taskButton'];
+  finishedSetting = signal(false);
 
   constructor(private firestore: FirestoreService, private auth: AuthService) {
     this.projects = [];
     // this.projects.push({projectName: "Test", numTasks: 0, priority: 0});
+    this.priorityValid = true;
 
+    effect(()=>{
+      if(this.finishedSetting()){
+        this.cacheProjects();
+      }
+    })
+  }
+
+  ngAfterContentInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
     // Load projects when auth state changes
     this.auth.setUserFunc(async () => {
       await this.firestore.setuserDoc();
+
       this.loadProjects();
     });
-    this.priorityValid = true;
+  }
+
+  checkCachedProjects() {
+    let cachedProjects = this.firestore.getCachedProjects('projects');
+    if (cachedProjects != null) {
+      return JSON.parse(cachedProjects);
+    }
+
+    return null;
+  }
+
+  cacheProjects() {
+    // Cache data
+    // if (this.projects != null) {
+    //   let tasks = new Array<Array<string>>();
+    //   for (let project of this.projects) {
+    //     let index = 0;
+    //     console.log(project.tasks);
+
+    //     for (let task of project.tasks) {
+    //       tasks[index++].push(task['name']);
+    //     }
+    //   }
+    //   this.firestore.cacheProjects('projects', this.projects, tasks);
+    // }
+    this.firestore.cacheProjects('projects', this.projects);
   }
 
   loadProjects(): void {
+    let cachedProjects = this.checkCachedProjects();
+
+    if (cachedProjects != null) {
+      let projArr = new Array<Project>();
+      for (let project in cachedProjects) {
+        projArr.push(cachedProjects[project]);
+      }
+      this.projects = projArr;
+
+      console.log('loaded cache');
+      return;
+    }
+
     this.firestore.getProjects().then(async (docs) => {
       this.projects = docs.map((doc) => {
         let project = <Project>doc.data()['project'];
         project.id = doc.id;
-
+        project.tasks = new Array<DocumentData>();
         return project;
       });
+
       for (let project of this.projects) {
-        this.firestore.getProjectTasks(project.id).then((tasks) => {
+        await this.firestore.getProjectTasks(project.id).then((tasks) => {
           project.tasks = tasks.docs.map((doc) => {
             return doc.data();
           });
-          console.log(project.tasks);
         });
       }
+
+      this.finishedSetting.set(true);
     });
   }
 
@@ -102,11 +155,13 @@ export class ProjectsComponent {
   }
 
   showTasks(projectID: string) {
+    let newTasks = document.getElementById('taskadd-' + projectID);
     let newRow = document.getElementById('tasks-' + projectID);
 
-    if (!newRow) return;
+    if (!newRow || !newTasks) return;
 
     newRow.style.display = newRow.style.display === 'none' ? '' : 'none';
+    newTasks.style.display = newTasks.style.display === 'none' ? '' : 'none';
   }
 
   async addTask(taskName: string, projectID: string) {
