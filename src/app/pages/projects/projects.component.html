@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         @for(project of projects; track project){
-        <tr>
+        <tr style="border-top: 1px solid;">
           <td>{{ project.projectName }}</td>
           <td>{{ project.numTasks }}</td>
           <td>{{ project.priority }}</td>
@@ -22,27 +22,28 @@
               style="width: fit-content"
             >
               <mat-icon
-                style="margin: auto; width: 100%"
+                class="dropdown-icon"
                 aria-hidden="false"
                 aria-label="dropdown_arrow"
                 fontIcon="arrow_drop_down"
+                id="icon-{{project.id}}"
               />
             </button>
           </td>
         </tr>
-          <tr id="taskadd-{{ project.id }}" style="display: none">
+          <tr id="taskadd-{{ project.id }}" style="display: none;">
             <td colspan="2">
               <mat-form-field style="margin-top: 2%; width:90%;">
                 <mat-label>New Task</mat-label>
-                <input matInput placeholder="Task Name"/>
+                <input #newTask matInput placeholder="Task Name"/>
               </mat-form-field>
             </td>
-            <td colspan="2" align="right"><button mat-stroked-button style="margin-right: 2%;">Add Task</button></td>
+            <td colspan="2" align="right"><button mat-stroked-button style="margin-right: 2%;" (click)="addTask(newTask.value, project.id)">Add Task</button></td>
           </tr>
 
-          @for(task of project.tasks; track $index){
-          <tr id="tasks-{{ project.id }}" style="display: none">
-            <td colspan="all">{{ task["name"] }}</td>
+          @for(task of project.tasks; track task){
+          <tr class="tasks" id="tasks-{{ project.id }}" style="display: none">
+            <td colspan="all">{{ task["taskName"] }}</td>
           </tr>
           }
         }

@@ -10,6 +10,7 @@ import { Title } from '@angular/platform-browser';
 import { map, filter } from 'rxjs';
 import { MatSortModule } from '@angular/material/sort';
 import { AngularMaterialModule } from './material.module';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',

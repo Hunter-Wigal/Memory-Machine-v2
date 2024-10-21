@@ -137,8 +137,20 @@ export class FirestoreService {
     );
   }
 
+  async addTask(projectID: string, taskName: string) {
+    let taskColl = collection(
+      this.db,
+      this.userDoc.path,
+      `projects/${projectID}/projectTasks`
+    );
+    return addDoc(taskColl, {taskName} );
+  }
+
   cacheProjects(key: string, object: Project[]) {
     let newCache = object.map((project) => {
+      if (project.tasks == null) {
+        project.tasks = [];
+      }
       let newProject: cachedProject = {
         projectName: project.projectName,
         id: project.id,
@@ -147,7 +159,6 @@ export class FirestoreService {
         tasks: Object.assign({}, project.tasks),
       };
       return newProject;
-
     });
 
     window.sessionStorage.setItem(key, JSON.stringify(newCache));

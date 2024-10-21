@@ -1,11 +1,11 @@
 @use "@angular/material" as mat;
+@include mat.core();
 
-$theme: mat.define-theme();
+@import '../../../styles.scss';
 
 table {
   border-collapse: collapse;
 }
-
 
 .project-table {
   width: 75%;
@@ -14,13 +14,7 @@ table {
   // @include mat.all-component-colors($dark-theme);
 }
 
-
-.test-row{
-  color: blue !important;
-  // margin-top: 10rem;
-}
-
-.mat-table{
+.mat-table {
   margin-top: 2%;
 
   width: 100%;
@@ -30,15 +24,15 @@ table {
   background-color: var(--mat-table-background-color);
   column-count: auto;
 
-
-  tr{
+  tr {
     border-bottom-color: var(--mat-table-row-item-outline-color);
     border-bottom-width: 1px;
     border-bottom-style: solid;
     height: 3rem;
   }
 
-  td,th{
+  td,
+  th {
     padding: 0 1%;
   }
 }
@@ -86,9 +80,27 @@ table {
 
 .priority-input {
   width: 50%;
-
 }
 
 .submit {
   height: 75%;
+}
+
+.dropdown-icon {
+  margin: auto;
+  width: 100%;
+  transition: transform 0.5s linear 0s;
+  transform: rotate(0deg);
+}
+
+[id^="tasks-"] {
+  transition: display 0.5s linear 0s;
+  border-bottom: none !important;
+}
+
+
+[id^="taskadd-"] {
+  transition: display 0.5s linear 0s;
+  border-top: 3px dashed mat.get-theme-color($theme, tertiary, 50);
+  border-bottom: none !important;
 }
