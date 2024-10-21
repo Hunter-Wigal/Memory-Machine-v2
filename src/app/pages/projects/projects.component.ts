@@ -89,9 +89,6 @@ export class ProjectsComponent implements AfterContentInit {
         project.tasks = taskArr;
         this.projects.push(project);
       }
-
-      console.log('loaded cache');
-      console.log(this.projects);
       return;
     }
 
@@ -106,7 +103,7 @@ export class ProjectsComponent implements AfterContentInit {
       for (let project of this.projects) {
         await this.firestore.getProjectTasks(project.id).then((tasks) => {
           project.tasks = tasks.docs.map((doc) => {
-            return doc.data();
+            return { taskName: doc.data()['taskName'], taskID: doc.id };
           });
         });
       }
@@ -148,19 +145,22 @@ export class ProjectsComponent implements AfterContentInit {
 
   showTasks(projectID: string) {
     let newTasks = document.getElementById('taskadd-' + projectID);
-    let newRows = document.getElementsByClassName('tasks');
+    let newRows = document.getElementsByClassName("tasks-"+ projectID);
 
-    if (!newRows || !newTasks) return;
+    // Display the add new task input and flip the dropdown icon
+    if (!newTasks) return;
+    newTasks.style.display = newTasks.style.display === 'none' ? '' : 'none';
+
+    this.flipIcon(projectID);
+
+    // Display the tasks for the project if they exist
+    if (!newRows) return;
 
     for (let row in newRows) {
       if ((<HTMLElement>newRows[row]).style != undefined)
         (<HTMLElement>newRows[row]).style.display =
           (<HTMLElement>newRows[row]).style.display === 'none' ? '' : 'none';
     }
-
-    newTasks.style.display = newTasks.style.display === 'none' ? '' : 'none';
-
-    this.flipIcon(projectID);
   }
 
   flipIcon(projectID: string) {
@@ -173,8 +173,13 @@ export class ProjectsComponent implements AfterContentInit {
   }
 
   async addTask(taskName: string, projectID: string) {
-    console.log(taskName);
     this.firestore.addTask(projectID, taskName).then((result) => {
+      this.loadProjects(false);
+    });
+  }
+
+  async deleteTask(projectID: string, taskID: string) {
+    this.firestore.deleteProjectTask(projectID, taskID).then((result) => {
       this.loadProjects(false);
     });
   }

@@ -146,6 +146,12 @@ export class FirestoreService {
     return addDoc(taskColl, {taskName} );
   }
 
+  async deleteProjectTask(projectID: string, taskID: string) {
+    return deleteDoc(
+      doc(this.db, this.userDoc.path, `projects/${projectID}/projectTasks/${taskID}`)
+    );
+  }
+
   cacheProjects(key: string, object: Project[]) {
     let newCache = object.map((project) => {
       if (project.tasks == null) {
