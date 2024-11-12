@@ -18,8 +18,8 @@ export const appConfig: ApplicationConfig = {
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore() ),
     provideAnalytics(() => getAnalytics()),
-    provideAnimationsAsync(), provideAnimationsAsync(),
+    provideAnimationsAsync(), provideAnimationsAsync()
   ],
-  
+
 };
 

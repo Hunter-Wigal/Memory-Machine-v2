@@ -20,9 +20,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     RouterOutlet,
     NavbarComponent,
-    FooterComponent,
     FormsModule,
-    TestNavComponent,
     MatSortModule
   ],
 

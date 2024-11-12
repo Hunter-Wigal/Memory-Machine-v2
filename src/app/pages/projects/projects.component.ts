@@ -3,12 +3,10 @@ import { FirestoreService } from '../../services/firestore.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MatButton } from '@angular/material/button';
-import { MatTable, MatTableModule } from '@angular/material/table';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { DocumentData, getDocs } from '@angular/fire/firestore';
+import { DocumentData } from '@angular/fire/firestore';
 
 export interface Project {
   projectName: string;
@@ -24,10 +22,7 @@ export interface Project {
   imports: [
     FormsModule,
     MatButton,
-    MatTable,
     MatTableModule,
-    MatSlideToggle,
-    MatCheckbox,
     MatInputModule,
     MatIconModule,
   ],
@@ -42,7 +37,6 @@ export class ProjectsComponent implements AfterContentInit {
 
   constructor(private firestore: FirestoreService, private auth: AuthService) {
     this.projects = [];
-    // this.projects.push({projectName: "Test", numTasks: 0, priority: 0});
     this.priorityValid = true;
 
     this.auth.setUserFunc(async () => {
@@ -145,7 +139,7 @@ export class ProjectsComponent implements AfterContentInit {
 
   showTasks(projectID: string) {
     let newTasks = document.getElementById('taskadd-' + projectID);
-    let newRows = document.getElementsByClassName("tasks-"+ projectID);
+    let newRows = document.getElementsByClassName('tasks-' + projectID);
 
     // Display the add new task input and flip the dropdown icon
     if (!newTasks) return;

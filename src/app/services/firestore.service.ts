@@ -2,7 +2,6 @@ import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
   DocumentReference,
   Firestore,
-  QueryDocumentSnapshot,
   addDoc,
   collection,
   deleteDoc,
@@ -48,29 +47,11 @@ export class FirestoreService {
     }
 
     return getDocs(collection(this.db, this.userDoc.path, 'tasks'));
-
-    // let docs = getDocs(collection(this.db, "tasks")).then((response) => {
-    //     return response.docs;
-    // });
-
-    // return docs;
   }
 
   insertNewTask(task: Task) {
     let coll = collection(this.db, this.userDoc.path, 'tasks');
-    // let coll = collection(this.db, `userStored/${this.authService.getCurrUser()?.uid}/tasks`)
-    // TODO update this to work for different users
     return addDoc(coll, { task });
-    // return addDoc(collection(this.db, "tasks"), { task }).then(
-    //     (response) => {
-    //         console.log("Added new document");
-    //         console.log(response);
-    //         return true;
-    //     },
-    //     (error) => {
-    //         return false;
-    //     }
-    // );
   }
 
   async deleteTask(id: string | undefined) {
@@ -143,12 +124,16 @@ export class FirestoreService {
       this.userDoc.path,
       `projects/${projectID}/projectTasks`
     );
-    return addDoc(taskColl, {taskName} );
+    return addDoc(taskColl, { taskName });
   }
 
   async deleteProjectTask(projectID: string, taskID: string) {
     return deleteDoc(
-      doc(this.db, this.userDoc.path, `projects/${projectID}/projectTasks/${taskID}`)
+      doc(
+        this.db,
+        this.userDoc.path,
+        `projects/${projectID}/projectTasks/${taskID}`
+      )
     );
   }
 
