@@ -1,1 +1,57 @@
-@import '@angular/material/prebuilt-themes/azure-blue.css';
+// @import "@angular/material/prebuilt-themes/azure-blue.css";
+@use "@angular/material" as mat;
+@import '../../../styles.scss';
+
+@include mat.core();
+
+.table-container {
+  display: flex;
+  max-width: 85%;
+  min-width: 70%;
+  margin: auto;
+  margin-top: 5%;
+}
+
+.schedule-table {
+  td,
+  th {
+    text-align: center;
+    margin-inline: end;
+  }
+}
+
+.title {
+  text-align: center;
+}
+
+.times {
+  border-right: 2px solid white;
+}
+
+.cols {
+  border-right: 1px dashed white;
+  width: percentage(calc(1 / 7)) - 1.5;
+}
+
+.event-add {
+  display: flex;
+  margin-inline: auto;
+  max-width: 85%;
+  min-width: 70%;
+  flex-direction: row;
+  margin-top: 2%;
+}
+
+.event-form {
+  width: 100%;
+}
+
+.day-select {
+  margin-inline: 1%;
+}
+
+.time-input {
+  margin-inline: 1%;
+  width: 10%;
+}
+

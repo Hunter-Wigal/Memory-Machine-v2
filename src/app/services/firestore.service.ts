@@ -10,6 +10,7 @@ import {
 } from '@angular/fire/firestore';
 import { Task } from '../pages/tasks/tasks.component';
 import { Project } from '../pages/projects/projects.component';
+import { EventType } from '../pages/schedule/schedule.component';
 import { AuthService } from './auth.service';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -161,5 +162,18 @@ export class FirestoreService {
     } else {
       return null;
     }
+  }
+
+  getSchedule() {
+    return getDocs(collection(this.db, this.userDoc.path, 'schedule')).then(
+      (response) => {
+        return response.docs;
+      }
+    );
+  }
+
+  addToSchedule(event: any) {
+    let scheduleColl = collection(this.db, this.userDoc.path, `schedule/`);
+    return addDoc(scheduleColl, event);
   }
 }

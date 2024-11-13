@@ -1,3 +1,104 @@
-<p>schedule works!</p>
+<div class="container">
+  <h1 class="title">Schedule Page</h1>
+  <div class="table-container">
+    <table
+      mat-table
+      #matTable
+      [dataSource]="dataSource"
+      class="mat-elevation-z8 schedule-table"
+    >
+      <ng-container matColumnDef="times">
+        <th mat-header-cell *matHeaderCellDef>Times</th>
+        <td mat-cell *matCellDef="let element" class="times">
+          {{ element.startTime.hours }}:@if(element.startTime.minutes < 10){0}{{element.startTime.minutes}} -
+          {{ element.endTime.hours }}:@if(element.endTime.minutes < 10){0}{{element.endTime.minutes}}
+        </td>
+      </ng-container>
 
-<button mat-raised-button>Text here</button>
+      <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+      <ng-container matColumnDef="sunday">
+        <th mat-header-cell *matHeaderCellDef>Sunday</th>
+        <td mat-cell *matCellDef="let element" class="cols">
+          @if(element.sunday){{{element.eventName}}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="monday">
+        <th mat-header-cell *matHeaderCellDef>Monday</th>
+        <td mat-cell *matCellDef="let element" class="cols">
+          @if(element.monday){{{element.eventName}}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="tuesday">
+        <th mat-header-cell *matHeaderCellDef>Tuesday</th>
+        <td mat-cell *matCellDef="let element" class="cols">
+          @if(element.tuesday){{{element.eventName}}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="wednesday">
+        <th mat-header-cell *matHeaderCellDef>Wednesday</th>
+        <td mat-cell *matCellDef="let element" class="cols">
+          @if(element.wednesday){{{element.eventName}}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="thursday">
+        <th mat-header-cell *matHeaderCellDef>Thursday</th>
+        <td mat-cell *matCellDef="let element" class="cols">
+          @if(element.thursday){{{element.eventName}}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="friday">
+        <th mat-header-cell *matHeaderCellDef>Friday</th>
+        <td mat-cell *matCellDef="let element" class="cols">
+          @if(element.friday){{{element.eventName}}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="saturday">
+        <th mat-header-cell *matHeaderCellDef>Saturday</th>
+        <td mat-cell *matCellDef="let element" class="cols">
+          @if(element.saturday){{{element.eventName}}}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <div class="event-add">
+    <form class="event-form" [formGroup]="eventForm" (ngSubmit)="addEvent()">
+      <mat-form-field>
+        <mat-label>New Event</mat-label>
+        <input
+          matInput
+          placeholder="Event Name"
+          value=""
+          formControlName="eventName"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="time-input">
+        <mat-label>Start Time</mat-label>
+        <input matInput type="time" value="" formControlName="startTime" />
+      </mat-form-field>
+
+      <mat-form-field class="time-input">
+        <mat-label>End Time</mat-label>
+        <input matInput type="time" value="" formControlName="endTime" />
+      </mat-form-field>
+
+      <span class="day-select checkboxes" aria-label="Select an option">
+        <mat-checkbox value="Sunday" formControlName="sunday"
+          >Sunday</mat-checkbox
+        >
+        <mat-checkbox value="Monday" formControlName="monday">Monday</mat-checkbox>
+        <mat-checkbox value="Tuesday" formControlName="tuesday">Tuesday</mat-checkbox>
+        <mat-checkbox value="Wednesday" formControlName="wednesday">Wednesday</mat-checkbox>
+        <mat-checkbox value="Thursday" formControlName="thursday">Thursday</mat-checkbox>
+        <mat-checkbox value="Friday" formControlName="friday">Friday</mat-checkbox>
+        <mat-checkbox value="Saturday" formControlName="saturday">Saturday</mat-checkbox>
+      </span>
+
+      <button mat-raised-button type="submit">Add</button>
+    </form>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 <mat-toolbar class="mat-elevation-z5 navbar">
-    <img routerLink="/home" class="logo">
+    <img routerLink="/home" class="logo" src="/assets/artificial-intelligence-mod.png">
     <h3 routerLink="/home" class="title">Memory Machine 2.0</h3>
 
     <mat-nav-list class="links">
@@ -17,7 +17,7 @@
 
     <div class="account">
         @if(currUser == null){
-        <button mat-raised-button (click)="registerModal(signUp)">Sign Up</button>
+        <button mat-raised-button (click)="registerModal(signUp)" style="margin-right: 5%">Sign Up</button>
         <button mat-stroked-button (click)="signInModal(signIn)">Sign In</button>
         }
         @else {
