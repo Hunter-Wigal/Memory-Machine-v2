@@ -17,8 +17,8 @@
 
     <div class="account">
         @if(currUser == null){
-        <button mat-raised-button (click)="registerModal(signUp)" style="margin-right: 5%">Sign Up</button>
-        <button mat-stroked-button (click)="signInModal(signIn)">Sign In</button>
+        <button mat-raised-button (click)="registerModal()" style="margin-right: 5%">Sign Up</button>
+        <button mat-stroked-button (click)="signInModal()">Sign In</button>
         }
         @else {
         <button class="account-button" (click)="accountDropdown(dropdown)"><mat-icon class="account-icon" fontIcon="account_circle" aria-hidden="false"
@@ -41,7 +41,7 @@
         <h1 class="title">Sign Up</h1>
         <input placeholder="First Name" type="text" first-name ngModel name="firstname">
         <input placeholder="Last Name" type="text" last-name ngModel name="lastname">
-        <input placeholder="Email Address" type="text" email ngModel name="email">
+        <input autofocus="false" autocomplete="false" placeholder="Email Address" type="text" email ngModel name="email">
         <input placeholder="Password" type="password" password ngModel name="password">
         <button type="submit">Submit</button>
     </form>

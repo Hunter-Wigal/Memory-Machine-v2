@@ -1,7 +1,7 @@
-@include mat.core();@use "@angular/material" as mat;
-
-
+@use "@angular/material" as mat;
 @import '../../../styles.scss';
+
+@include mat.core();
 
 table {
   border-collapse: collapse;

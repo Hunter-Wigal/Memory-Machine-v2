@@ -1,3 +1,7 @@
 <app-navbar></app-navbar>
+@if(authenticated || homePage){
 <router-outlet />
+} @else {
+<app-login-message />
+}
 <!-- <app-footer></app-footer> -->

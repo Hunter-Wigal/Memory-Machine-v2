@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { FirebaseApp } from '@angular/fire/app';
 import {
   Auth,
@@ -17,6 +17,8 @@ import {
 export class AuthService {
   private auth: Auth;
   private currUser: User | null;
+  private loginModal!: ElementRef;
+  private registerUserModal!: ElementRef;
 
   constructor(private app: FirebaseApp) {
     // Initialize Firebase Authentication and get a reference to the service
@@ -89,5 +91,35 @@ export class AuthService {
 
   public async signOut() {
     this.auth.signOut();
+  }
+
+  public authenticated(): boolean {
+    return this.currUser != null;
+  }
+
+  public setRegisterrModal(modal: ElementRef) {
+    this.registerUserModal = modal;
+  }
+
+  public setLoginModal(modal: ElementRef) {
+    this.loginModal = modal;
+  }
+
+  public registerModal() {
+    let modal = this.registerUserModal.nativeElement;
+    modal.showModal();
+
+    modal.getElementsByClassName('close')[0].addEventListener('click', () => {
+      modal.close();
+    });
+  }
+
+  public signInModal() {
+    let modal = this.loginModal.nativeElement;
+    modal.showModal();
+
+    modal.getElementsByClassName('close')[0].addEventListener('click', () => {
+      modal.close();
+    });
   }
 }

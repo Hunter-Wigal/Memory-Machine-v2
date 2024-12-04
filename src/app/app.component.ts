@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive, ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { NavbarComponent } from "./components/navbar/navbar.component";
-import { FooterComponent } from "./components/footer/footer.component";
-import { FirebaseApp } from '@angular/fire/app';
+import {
+  RouterOutlet,
+  RouterLink,
+  RouterLinkActive,
+  ActivatedRoute,
+  Router,
+  NavigationEnd,
+} from '@angular/router';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TestNavComponent } from "./components/test-nav/test-nav.component";
 import { Title } from '@angular/platform-browser';
 import { map, filter } from 'rxjs';
 import { MatSortModule } from '@angular/material/sort';
-import { AngularMaterialModule } from './material.module';
-import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
+import { LoginMessageComponent } from './components/login-message/login-message.component';
 
 @Component({
   selector: 'app-root',
@@ -21,19 +24,21 @@ import { CommonModule } from '@angular/common';
     RouterOutlet,
     NavbarComponent,
     FormsModule,
-    MatSortModule
+    MatSortModule,
+    LoginMessageComponent,
   ],
-
 })
 export class AppComponent {
   title = 'memory_machine_app';
+  authenticated = false;
+  homePage = false;
 
   public constructor(
     private titleService: Title,
     private route: ActivatedRoute,
-    private router: Router
-  ) {
-  }
+    private router: Router,
+    private as: AuthService
+  ) {}
 
   ngOnInit(): void {
     //TODO figure out observables
@@ -44,6 +49,8 @@ export class AppComponent {
           const child: ActivatedRoute | null = this.route.firstChild;
           let title = child && child.snapshot.data['title'];
           if (title) {
+            if (title === 'Home') this.homePage = true;
+            else this.homePage = false;
             return title;
           }
         })
@@ -53,5 +60,9 @@ export class AppComponent {
           this.titleService.setTitle(`${title}`);
         }
       });
+
+    this.as.setUserFunc(() => {
+      this.authenticated = this.as.authenticated();
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgModule, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, NgModule, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
@@ -27,7 +27,7 @@ import { MatIcon } from '@angular/material/icon';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements AfterContentInit {
   protected currUser: User | null;
 
   @ViewChild('signIn') loginModal!: ElementRef;
@@ -44,25 +44,21 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngAfterContentInit() {
     this.currUser = this.authService.getCurrUser();
+    this.authService.setLoginModal(this.loginModal);
+    this.authService.setRegisterrModal(this.registerUserModal);
   }
 
-  public registerModal(modal: HTMLDialogElement) {
-    modal.showModal();
-
-    modal.getElementsByClassName('close')[0].addEventListener('click', () => {
-      modal.close();
-    });
+  public registerModal(){
+    this.authService.registerModal();
   }
 
-  public signInModal(modal: HTMLDialogElement) {
-    modal.showModal();
-
-    modal.getElementsByClassName('close')[0].addEventListener('click', () => {
-      modal.close();
-    });
+  public signInModal(){
+    this.authService.signInModal();
   }
+
+
 
   public async registerUser(userForm: NgForm) {
     let user = userForm.form.value;

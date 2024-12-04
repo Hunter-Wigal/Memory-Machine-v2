@@ -1,8 +1,8 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 // @use '@angular/material/prebuilt-themes/azure-blue.css';
 // @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @include mat.core();
-@import '../../../styles.scss';
+@import "../../../styles.scss";
 
 // nav{
 //     // background-color: rgb(211, 211, 211);
@@ -13,38 +13,37 @@
 //     align-items: center;
 // }
 
-.logo{
-    width: 48px;
-    height: 48px;
-    background-color: black;
-    border-radius: 50%;
-    position: relative;
-    display: block;
-    margin-inline: 1%;
-    border: 2px solid black;
+.logo {
+  width: 48px;
+  height: 48px;
+  background-color: black;
+  border-radius: 50%;
+  position: relative;
+  display: block;
+  margin-inline: 1%;
+  border: 2px solid black;
 }
 
-.links{
-    margin-left: 2%;
-    // // color: white;
-    font-size: 18px;
-    // justify-content: space-between;
-    // align-items: center;
-    display: flex;
-    width: 40%;
-
+.links {
+  margin-left: 2%;
+  // // color: white;
+  font-size: 18px;
+  // justify-content: space-between;
+  // align-items: center;
+  display: flex;
+  width: 40%;
 }
 
-.links > a{
-    // margin-left: 5%;
-    // text-decoration: none;
-    // position: relative;
-    // display: block;
-    width: fit-content;
+.links > a {
+  // margin-left: 5%;
+  // text-decoration: none;
+  // position: relative;
+  // display: block;
+  width: fit-content;
 }
 
-.links > a:hover{
-    color: white;
+.links > a:hover {
+  color: white;
 }
 
 // .active{
@@ -55,55 +54,60 @@
 //     // background-color: get-theme-color($theme, );
 // }
 
-.title:hover{
-    color: white;
+.title:hover {
+  color: white;
 }
 
-.account{
-    position: absolute;
-    right: 0;
-    margin-right: 2%;
-    justify-content: center;
+.account {
+  position: absolute;
+  right: 0;
+  margin-right: 2%;
+  justify-content: center;
 }
 
-.account > p{
-    margin-bottom: 0.5rem;
-    margin-top: 0;
+.account > p {
+  margin-bottom: 0.5rem;
+  margin-top: 0;
 }
 
-.account-icon{
-    width: 48px;
-    height: 48px;
-    font-size: 48px;
+.account-icon {
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
 }
 
-.account-button{
-    background-color: none;
-    background: 0;
-    border: 0;
-    color: white;
-    cursor: pointer;
+.account-button {
+  background-color: none;
+  background: 0;
+  border: 0;
+  color: white;
+  cursor: pointer;
 }
 
-.account-dropdown{
-    position: absolute;
-    display: none;
-    flex-direction: column;
-    right: 0;
-    translate: 20%;
-    background-color: whitesmoke;
-    color: black;
-    padding: 5% 30%;
+.account-dropdown {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  right: 0;
+  translate: 20%;
+  background-color: whitesmoke;
+  color: black;
+  padding: 5% 30%;
+  z-index: 5;
 }
 
-.logout-btn{
-    height: 80%;
-    justify-self: center;
-    display: block;
+.logout-btn {
+  height: 80%;
+  display: block;
+  z-index: 10;
+}
+
+.logout-btn:hover {
+  cursor: pointer;
 }
 
 // $theme: mat.define-theme();
 
-.navbar{
+.navbar {
   background-color: mat.get-theme-color($theme, primary, 30);
 }
