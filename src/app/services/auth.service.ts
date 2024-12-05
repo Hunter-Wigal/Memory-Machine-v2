@@ -1,4 +1,4 @@
-import { ElementRef, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FirebaseApp } from '@angular/fire/app';
 import {
   Auth,
@@ -17,8 +17,6 @@ import {
 export class AuthService {
   private auth: Auth;
   private currUser: User | null;
-  private loginModal!: ElementRef;
-  private registerUserModal!: ElementRef;
 
   constructor(private app: FirebaseApp) {
     // Initialize Firebase Authentication and get a reference to the service
@@ -39,11 +37,15 @@ export class AuthService {
   }
 
   public async registerUser(userDetails: {
-    firstname: string;
-    lastname: string;
-    email: string;
-    password: string;
+    firstname: string | null | undefined;
+    lastname: string | null | undefined;
+    email: string | null | undefined;
+    password: string | null | undefined;
   }) {
+
+    if(userDetails.email == null || userDetails.password == null)
+      return;
+
     let user = await createUserWithEmailAndPassword(
       this.auth,
       userDetails.email,
@@ -97,29 +99,4 @@ export class AuthService {
     return this.currUser != null;
   }
 
-  public setRegisterrModal(modal: ElementRef) {
-    this.registerUserModal = modal;
-  }
-
-  public setLoginModal(modal: ElementRef) {
-    this.loginModal = modal;
-  }
-
-  public registerModal() {
-    let modal = this.registerUserModal.nativeElement;
-    modal.showModal();
-
-    modal.getElementsByClassName('close')[0].addEventListener('click', () => {
-      modal.close();
-    });
-  }
-
-  public signInModal() {
-    let modal = this.loginModal.nativeElement;
-    modal.showModal();
-
-    modal.getElementsByClassName('close')[0].addEventListener('click', () => {
-      modal.close();
-    });
-  }
 }

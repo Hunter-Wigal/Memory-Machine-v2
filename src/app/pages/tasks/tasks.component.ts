@@ -79,6 +79,8 @@ export class TasksComponent {
   }
 
   updatetasks() {
+    if(!this.table)
+      return;
     let tasks: Task[] = [];
     this.firestore.getTasks().then((response) => {
       if (response == undefined) {

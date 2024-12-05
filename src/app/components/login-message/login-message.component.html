@@ -1,15 +1,10 @@
-<div class="message">
-  @if(!timerFinished){
-  <h1>Loading ...</h1>
-  } @else{
-  <h1>Please log in to continue</h1>
-  <button
-    mat-raised-button
-    (click)="registerModal()"
-    style="margin-right: 5%"
-  >
-    Sign Up
-  </button>
-  <button mat-stroked-button (click)="signInModal()">Sign In</button>
-  }
+<div class="body">
+  <div class="message">
+    @if(!timerFinished){
+    <h1>Loading ...</h1>
+    } @else{
+    <h1>Please log in to continue</h1>
+      <app-auth-modal-buttons/>
+    }
+  </div>
 </div>

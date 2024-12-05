@@ -4,11 +4,11 @@ import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
 // Temp solution
 import { NgForm, FormsModule } from '@angular/forms';
-import { OnInit } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNavList, MatListItem } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
+import { AuthModalButtonsComponent } from "../auth-modal-buttons/auth-modal-buttons.component";
 
 @Component({
   selector: 'app-navbar',
@@ -18,20 +18,17 @@ import { MatIcon } from '@angular/material/icon';
     RouterLink,
     RouterLinkActive,
     MatToolbar,
-    FormsModule,
     MatNavList,
     MatListItem,
     MatIcon,
     MatButtonModule,
-  ],
+    AuthModalButtonsComponent
+],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements AfterContentInit {
   protected currUser: User | null;
-
-  @ViewChild('signIn') loginModal!: ElementRef;
-  @ViewChild('signUp') registerUserModal!: ElementRef;
 
   public router: Router;
 
@@ -41,55 +38,13 @@ export class NavbarComponent implements AfterContentInit {
       this.currUser = user;
     });
     this.router = router;
-
   }
 
   ngAfterContentInit() {
     this.currUser = this.authService.getCurrUser();
-    this.authService.setLoginModal(this.loginModal);
-    this.authService.setRegisterrModal(this.registerUserModal);
-  }
-
-  public registerModal(){
-    this.authService.registerModal();
-  }
-
-  public signInModal(){
-    this.authService.signInModal();
   }
 
 
-
-  public async registerUser(userForm: NgForm) {
-    let user = userForm.form.value;
-
-    await this.authService.registerUser(user);
-
-    let credentials = await this.authService.signIn({
-      email: user.email,
-      password: user.password,
-    });
-
-    this.registerUserModal.nativeElement.close();
-    this.currUser = this.authService.getCurrUser();
-    location.reload();
-  }
-
-  public async login(userForm: NgForm) {
-    let user = userForm.form.value;
-
-    let credentials = await this.authService.signIn({
-      email: user.email,
-      password: user.password,
-    });
-
-    if (credentials != undefined) {
-      this.currUser = credentials.user;
-      userForm.resetForm();
-      this.loginModal.nativeElement.close();
-      location.reload();
-    }
-  }
 
   public async signOut() {
     await this.authService.signOut();
