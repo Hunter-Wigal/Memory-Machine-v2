@@ -45,7 +45,7 @@ export class ProjectsComponent implements AfterContentInit {
       this.loadProjects(true);
     });
 
-    // Caches projects after the've been loaded once
+    // Caches projects after they've been loaded once
     effect(() => {
       if (this.finishedSetting()) {
         this.cacheProjects();

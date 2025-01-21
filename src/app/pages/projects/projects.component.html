@@ -22,7 +22,7 @@
               style="width: fit-content"
             >
               <mat-icon
-                class="dropdown-icon"
+                class="dropdown icon"
                 aria-hidden="false"
                 aria-label="dropdown_arrow"
                 fontIcon="arrow_drop_down"
@@ -30,6 +30,9 @@
               />
             </button>
           </td>
+          <td style="width: 7.5%"><button mat-button mat-tertiary style="width: fit-content" (click)="deleteProject(project.id)">
+            <mat-icon class="delete icon" fontIcon="delete"/>
+          </button></td>
         </tr>
           <tr id="taskadd-{{ project.id }}" style="display: none;">
             <td colspan="2">
@@ -44,7 +47,7 @@
           @for(task of project.tasks; track task){
           <tr class="tasks-{{project.id}}" id="tasks-{{ project.id }}" style="display: none">
             <td colspan="3">{{ task["taskName"] }}</td>
-            <td align="right"><button mat-stroked-button (click)="deleteTask(project.id, task.taskID)">Delete Task</button></td>
+            <td align="right"><button mat-stroked-button class="delete-task" (click)="deleteTask(project.id, task.taskID)">Delete Task</button></td>
           </tr>
           }
         }

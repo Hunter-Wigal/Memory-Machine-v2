@@ -86,21 +86,37 @@ table {
   height: 75%;
 }
 
-.dropdown-icon {
-  margin: auto;
-  width: 100%;
+.dropdown {
   transition: transform 0.5s linear 0s;
   transform: rotate(0deg);
 }
 
+.icon{
+  margin: auto !important;
+  width: 100%;
+}
+
+.delete{
+  color: mat.get-theme-color($theme, error, 50) !important;
+}
+
+.delete-task{
+  color: mat.get-theme-color($theme, tertiary, 70) !important;
+  border-color: mat.get-theme-color($theme, error, 50) !important;
+}
+
+.mat-warn{
+  color: red;
+}
+
 [id^="tasks-"] {
-  transition: display 0.5s linear 0s;
+  transition: display 0.4s linear 0s;
   border-bottom: none !important;
 }
 
 
 [id^="taskadd-"] {
-  transition: display 0.5s linear 0s;
+  transition: display 0.4s linear 0s;
   border-top: 3px dashed mat.get-theme-color($theme, tertiary, 50);
   border-bottom: none !important;
 }
