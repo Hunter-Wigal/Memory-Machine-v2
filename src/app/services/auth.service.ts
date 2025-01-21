@@ -42,9 +42,7 @@ export class AuthService {
     email: string | null | undefined;
     password: string | null | undefined;
   }) {
-
-    if(userDetails.email == null || userDetails.password == null)
-      return;
+    if (userDetails.email == null || userDetails.password == null) return;
 
     let user = await createUserWithEmailAndPassword(
       this.auth,
@@ -85,18 +83,22 @@ export class AuthService {
       this.auth,
       details.email,
       details.password
-    ).catch((error) => {
-      console.log(error);
-      return null;
-    });
+    )
+      .then(() => {
+        localStorage.setItem('loggedIn', 'true');
+      })
+      .catch((error) => {
+        console.log(error);
+        return null;
+      });
   }
 
   public async signOut() {
     this.auth.signOut();
+    localStorage.setItem('loggeddIn', 'false');
   }
 
   public authenticated(): boolean {
     return this.currUser != null;
   }
-
 }

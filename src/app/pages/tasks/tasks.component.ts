@@ -79,7 +79,7 @@ export class TasksComponent {
   }
 
   updatetasks() {
-    if(!this.table)
+    if(!this.table || !this.auth.authenticated())
       return;
     let tasks: Task[] = [];
     this.firestore.getTasks().then((response) => {
