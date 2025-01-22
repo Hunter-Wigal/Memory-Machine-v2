@@ -1,45 +1,5 @@
-<button mat-raised-button (click)="registerModal()" style="margin-right: 5%">
+<button mat-raised-button (click)="openRegisterDialog()" style="margin-right: 5%">
   Sign Up
 </button>
-<button mat-stroked-button (click)="signInModal()">Sign In</button>
+<button mat-stroked-button (click)="openLoginDialog()">Sign In</button>
 
-<dialog class="modal" #signUp>
-    <span class="close" #close>&times;</span>
-    <form class="modal-content" [formGroup]="registerForm" autocomplete="off" [autofocus]="false" >
-        <h1 class="title">Sign Up</h1>
-        <mat-form-field class="form-input">
-          <mat-label>First Name</mat-label>
-          <input matInput placeholder="First Name" value="" formControlName="firstNameFormControl">
-        </mat-form-field>
-        <mat-form-field class="form-input">
-          <mat-label>Last Name</mat-label>
-          <input matInput placeholder="Last Name" value="" formControlName="lastNameFormControl">
-        </mat-form-field>
-        <mat-form-field class="form-input">
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Email" value="" formControlName="emailFormControl">
-        </mat-form-field>
-        <mat-form-field class="form-input">
-          <mat-label>Password</mat-label>
-          <input matInput placeholder="Password" value="" formControlName="passwordFormControl">
-        </mat-form-field>
-        <button mat-flat-button class="submit-btn" (click)="registerUser()">Submit</button>
-    </form>
-</dialog>
-
-
-<dialog class="modal" #signIn type="modal">
-  <span class="close" #close>&times;</span>
-  <form class="modal-content" [formGroup]="loginForm" autocomplete="off" [autofocus]="false">
-    <h1 class="title">Log In</h1>
-    <mat-form-field class="form-input">
-      <mat-label>Email</mat-label>
-      <input matInput placeholder="Email" value="" formControlName="emailFormControl">
-    </mat-form-field>
-    <mat-form-field class="form-input">
-      <mat-label>Password</mat-label>
-      <input matInput placeholder="Password" value="" formControlName="passwordFormControl">
-    </mat-form-field>
-    <button mat-flat-button class="submit-btn" (click)="login()">Submit</button>
-  </form>
-</dialog>

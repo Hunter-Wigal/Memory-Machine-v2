@@ -45,8 +45,8 @@
           </tr>
 
           @for(task of project.tasks; track task){
-          <tr class="tasks-{{project.id}}" id="tasks-{{ project.id }}" style="display: none">
-            <td colspan="3">{{ task["taskName"] }}</td>
+          <tr class="tasks-{{project.id}} task" id="tasks-{{ project.id }}" style="display: none">
+            <td colspan="3" >{{ task["taskName"] }}</td>
             <td align="right"><button mat-stroked-button class="delete-task" (click)="deleteTask(project.id, task.taskID)">Delete Task</button></td>
           </tr>
           }

@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { DocumentData } from '@angular/fire/firestore';
+import { MatDividerModule } from '@angular/material/divider';
 
 export interface Project {
   projectName: string;
@@ -25,6 +26,7 @@ export interface Project {
     MatTableModule,
     MatInputModule,
     MatIconModule,
+    MatDividerModule
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',

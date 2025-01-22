@@ -26,7 +26,7 @@ table {
 
   tr {
     border-bottom-color: var(--mat-table-row-item-outline-color);
-    border-bottom-width: 1px;
+    border-bottom-width: 2px;
     border-bottom-style: solid;
     height: 3rem;
   }
@@ -111,12 +111,16 @@ table {
 
 [id^="tasks-"] {
   transition: display 0.4s linear 0s;
-  border-bottom: none !important;
+  // border-bottom: none !important;
 }
 
 
 [id^="taskadd-"] {
   transition: display 0.4s linear 0s;
-  border-top: 3px dashed mat.get-theme-color($theme, tertiary, 50);
+  // border-top: 3px dashed mat.get-theme-color($theme, tertiary, 50);
   border-bottom: none !important;
+}
+
+.task{
+  border-bottom: 1px dashed !important;
 }
