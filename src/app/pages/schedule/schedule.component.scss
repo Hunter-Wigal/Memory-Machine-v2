@@ -55,3 +55,12 @@
   width: 10%;
 }
 
+.delete{
+  color: mat.get-theme-color($theme, error, 50) !important;
+  width: 75%;
+}
+.icon{
+  margin: auto !important;
+  width: 100%;
+}
+

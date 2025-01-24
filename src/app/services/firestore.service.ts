@@ -176,4 +176,9 @@ export class FirestoreService {
     let scheduleColl = collection(this.db, this.userDoc.path, `schedule/`);
     return addDoc(scheduleColl, event);
   }
+
+  deleteFromSchedule(eventID: string){
+    let scheduleColl = collection(this.db, this.userDoc.path, `schedule/`);
+    return deleteDoc(doc(this.db, scheduleColl.path, eventID));
+  }
 }

@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { FirestoreService } from '../../services/firestore.service';
 import { AuthService } from '../../services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
 
 /*
 Each row has a time, and possible a different event for each day at that time
@@ -34,6 +35,7 @@ export interface EventType {
   thursday: boolean;
   friday: boolean;
   saturday: boolean;
+  id: string;
 }
 
 @Component({
@@ -46,6 +48,7 @@ export interface EventType {
     MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
+    MatIconModule,
   ],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.scss',
@@ -61,6 +64,7 @@ export class ScheduleComponent implements OnInit {
     'thursday',
     'friday',
     'saturday',
+    'delete',
   ];
 
   eventForm = new FormGroup({
@@ -78,21 +82,7 @@ export class ScheduleComponent implements OnInit {
 
   @ViewChild('matTable') table!: MatTable<any>;
 
-  constructor(private fs: FirestoreService, private as: AuthService) {
-    let newEvent: EventType = {
-      eventName: 'Test event',
-      startTime: { hours: 5, minutes: 0 },
-      endTime: { hours: 6, minutes: 0 },
-      sunday: false,
-      monday: true,
-      tuesday: false,
-      wednesday: true,
-      thursday: false,
-      friday: true,
-      saturday: false,
-    };
-    this.dataSource.push(newEvent);
-  }
+  constructor(private fs: FirestoreService, private as: AuthService) {}
 
   ngOnInit(): void {
     this.as.setUserFunc(async () => {
@@ -108,6 +98,7 @@ export class ScheduleComponent implements OnInit {
         let data = doc.data();
         let startTime = data['startTime'].split(':');
         let endTime = data['endTime'].split(':');
+        let id = doc.id;
 
         let newRow: EventType = {
           eventName: data['eventName'],
@@ -126,6 +117,7 @@ export class ScheduleComponent implements OnInit {
           thursday: data['thursday'],
           friday: data['friday'],
           saturday: data['saturday'],
+          id: id,
         };
         this.dataSource.push(newRow);
       }
@@ -134,9 +126,22 @@ export class ScheduleComponent implements OnInit {
   }
 
   addEvent() {
-    this.fs.addToSchedule(this.eventForm.value).then((response)=>{
-      window.alert("Successfully added new event!");
+    this.fs.addToSchedule(this.eventForm.value).then((response) => {
+      window.alert('Successfully added new event!');
+      this.eventForm.reset();
       this.updateSchedule();
     });
+  }
+
+  deleteEvent(id: string) {
+    this.fs
+      .deleteFromSchedule(id)
+      .then(() => {
+        window.alert('Successfully removed event');
+        this.updateSchedule();
+      })
+      .catch((err) => {
+        window.alert(`Could not remove event: ${err}`);
+      });
   }
 }
