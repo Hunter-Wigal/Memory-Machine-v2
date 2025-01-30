@@ -8,7 +8,7 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNavList, MatListItem } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
-import { AuthModalButtonsComponent } from "../auth-modal-buttons/auth-modal-buttons.component";
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +22,7 @@ import { AuthModalButtonsComponent } from "../auth-modal-buttons/auth-modal-butt
     MatListItem,
     MatIcon,
     MatButtonModule,
-    AuthModalButtonsComponent
+    MatMenuModule
 ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',

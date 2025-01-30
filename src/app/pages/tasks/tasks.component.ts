@@ -1,15 +1,5 @@
-import { Time } from '@angular/common';
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-  model,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, ViewChild, model } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
-import { Timestamp, addDoc } from 'firebase/firestore';
 import { FirestoreService } from '../../services/firestore.service';
 import {
   FormControl,
@@ -17,26 +7,24 @@ import {
   FormsModule,
   NgForm,
 } from '@angular/forms';
-import { After } from 'v8';
 import { AuthService } from '../../services/auth.service';
 import {
   MatTable,
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table';
-import { Observable, Subscriber } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AngularMaterialModule } from '../../material.module';
 import { MatCardModule } from '@angular/material/card';
-import { CalendarComponent } from "../../components/calendar/calendar.component";
+import { CalendarComponent } from '../../components/calendar/calendar.component';
+import { MatIconModule } from '@angular/material/icon';
 
 // Temp class
 export interface Task {
   title: string;
-  date: Date;
+  date: Date | string;
   time?: String;
   id?: string;
 }
@@ -56,8 +44,9 @@ export interface Task {
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    CalendarComponent
-],
+    CalendarComponent,
+    MatIconModule,
+  ],
 })
 export class TasksComponent {
   @ViewChild('taskForm') taskForm!: NgForm;
@@ -76,11 +65,14 @@ export class TasksComponent {
       await this.firestore.setuserDoc();
       this.updatetasks();
     });
+
+    if (window.innerWidth <= 500) {
+      this.columnsToDisplay = ['title', 'date', 'delete'];
+    }
   }
 
   updatetasks() {
-    if(!this.table || !this.auth.authenticated())
-      return;
+    if (!this.table || !this.auth.authenticated()) return;
     let tasks: Task[] = [];
     this.firestore.getTasks().then((response) => {
       if (response == undefined) {
@@ -88,9 +80,16 @@ export class TasksComponent {
       }
       for (let item of response.docs) {
         let data = item.data()['task'];
+        let date: Date | string = new Date();
+        if (data['date'] != 'ASAP') {
+          date = new Date(data['date'].seconds * 1000);
+        } else {
+          date = 'ASAP';
+        }
+
         let task = {
           title: data['title'],
-          date: new Date(data['date'].seconds * 1000),
+          date: date,
           id: item.id,
         };
         tasks.push(task);
@@ -106,24 +105,33 @@ export class TasksComponent {
   }
 
   addTask(newTask: Task) {
-    let taskDate = new Date(newTask.date);
-    taskDate.setDate(taskDate.getUTCDate());
+    let taskDate: Date | string = new Date();
+    if (newTask.date) {
+      let taskDate = new Date(newTask.date);
+      taskDate.setDate(taskDate.getUTCDate());
+    } else {
+      taskDate = 'ASAP';
+    }
 
     // Extract the hours and minutes from the string. Easiest way to do it
-    if (newTask.time != undefined && newTask.time != '') {
+    if (
+      newTask.time != undefined &&
+      newTask.time != '' &&
+      typeof taskDate != 'string'
+    ) {
       let split = newTask.time.split(':');
       let taskTime = { hours: Number(split[0]), minutes: Number(split[1]) };
       taskDate.setHours(taskTime.hours, taskTime.minutes);
     }
     // Assume end of day if not specified
-    else taskDate.setHours(23, 59);
+    else if (typeof taskDate != 'string') taskDate.setHours(23, 59);
 
     // Call function in firestore service, handle return value from promise
     this.firestore
       .insertNewTask({ title: newTask.title, date: taskDate })
       .then((success) => {
         if (success) {
-          this.taskForm.reset();
+          this.taskForm.resetForm();
           window.alert('Successfully added new task!');
           this.updatetasks();
         } else {

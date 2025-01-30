@@ -59,7 +59,7 @@ export class AppComponent {
       )
       .subscribe((title) => {
         if (title) {
-          this.titleService.setTitle(`${title}`);
+          this.titleService.setTitle(`${title} - Memory Machine`);
         }
       });
 

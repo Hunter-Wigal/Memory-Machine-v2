@@ -1,6 +1,6 @@
 .message{
   text-align: center;
-  width: 25%;
+  width: 35%;
   height: 40%;
   margin-inline: auto;
   position: relative;
@@ -15,4 +15,16 @@
   height: 100%;
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 1000px){
+  .message{
+    width: 60%;
+  }
+}
+
+@media (max-width: 500px){
+  .message{
+    width: 90%;
+  }
 }

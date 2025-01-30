@@ -1,37 +1,50 @@
 <mat-toolbar class="mat-elevation-z5 navbar">
-    <img routerLink="/home" class="logo" src="/assets/artificial-intelligence-mod.png">
-    <h3 routerLink="/home" class="title">Memory Machine 2.0</h3>
+  <img routerLink="/home" class="logo" src="/assets/artificial-intelligence-mod.png">
+  <h3 routerLink="/home" class="title">Memory Machine 2.0</h3>
 
-    <mat-nav-list class="links">
+  <mat-nav-list class="links">
+    <a mat-list-item routerLink="/tasks" routerLinkActive="active"
+      [activated]="router.isActive('/tasks', true)">Tasks</a>
+    <a mat-list-item routerLink="/calendar" routerLinkActive="active"
+      [activated]="router.isActive('/calendar', true)">Calendar</a>
+    <a mat-list-item routerLink="/schedule" routerLinkActive="active"
+      [activated]="router.isActive('/schedule', true)">Schedule</a>
+    <a mat-list-item routerLink="/projects" routerLinkActive="active"
+      [activated]="router.isActive('/projects', true)">Projects</a>
+  </mat-nav-list>
+
+  <div class="right-menu">
+      <button class="hamburger-menu" mat-button [matMenuTriggerFor]="menu">
+        <mat-icon class="hamburger-icon" fontIcon="menu"></mat-icon>
+      </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <mat-nav-list class="menu">
         <a mat-list-item routerLink="/tasks" routerLinkActive="active"
-            [activated]="router.isActive('/tasks', true)">Tasks</a>
+          [activated]="router.isActive('/tasks', true)">Tasks</a>
         <a mat-list-item routerLink="/calendar" routerLinkActive="active"
-            [activated]="router.isActive('/calendar', true)">Calendar</a>
+          [activated]="router.isActive('/calendar', true)">Calendar</a>
         <a mat-list-item routerLink="/schedule" routerLinkActive="active"
-            [activated]="router.isActive('/schedule', true)">Schedule</a>
+          [activated]="router.isActive('/schedule', true)">Schedule</a>
         <a mat-list-item routerLink="/projects" routerLinkActive="active"
-            [activated]="router.isActive('/projects', true)">Projects</a>
-    </mat-nav-list>
-
-
-
+          [activated]="router.isActive('/projects', true)">Projects</a>
+      </mat-nav-list>
+    </mat-menu>
     <div class="account">
-        @if(currUser == null){
-          <!-- <app-auth-modal-buttons/> -->
-        }
-        @else {
-        <button class="account-button" (click)="accountDropdown(dropdown)"><mat-icon class="account-icon" fontIcon="account_circle" aria-hidden="false"
-                aria-label="Account profile icon"></mat-icon>
-                <mat-icon style="margin-left: 0; position: absolute; bottom: 0; translate: -10px -5px;" fontIcon="arrow_drop_down" aria-hidden="false"
-                aria-label="Account profile icon"></mat-icon>
-        </button>
-        <div class="account-dropdown" #dropdown id="account-dropdown">
-            <h4>{{currUser.displayName}}</h4>
-            <button mat-raised-button (click)="signOut()" class="logout-btn">Sign Out</button>
-        </div>
-        }
+      @if(currUser == null){
+      <!-- <app-auth-modal-buttons/> -->
+      }
+      @else {
+      <button class="account-button" (click)="accountDropdown(dropdown)"><mat-icon class="account-icon"
+          fontIcon="account_circle" aria-hidden="false" aria-label="Account profile icon"></mat-icon>
+        <mat-icon style="margin-left: 0; position: absolute; bottom: 0; translate: -10px -5px;" fontIcon="arrow_drop_down"
+          aria-hidden="false" aria-label="Account profile icon"></mat-icon>
+      </button>
+      <div class="account-dropdown" #dropdown id="account-dropdown">
+        <h4>{{currUser.displayName}}</h4>
+        <button mat-raised-button (click)="signOut()" class="logout-btn">Sign Out</button>
+      </div>
+      }
     </div>
+  </div>
+
 </mat-toolbar>
-
-
-

@@ -1,17 +1,6 @@
 @use "@angular/material" as mat;
-// @use '@angular/material/prebuilt-themes/azure-blue.css';
-// @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @include mat.core();
 @import "../../../styles.scss";
-
-// nav{
-//     // background-color: rgb(211, 211, 211);
-//     width: 100%;
-//     height: 10%;
-//     margin: 0px;
-//     display: flex;
-//     align-items: center;
-// }
 
 .logo {
   width: 48px;
@@ -26,19 +15,12 @@
 
 .links {
   margin-left: 2%;
-  // // color: white;
   font-size: 18px;
-  // justify-content: space-between;
-  // align-items: center;
   display: flex;
   width: 40%;
 }
 
 .links > a {
-  // margin-left: 5%;
-  // text-decoration: none;
-  // position: relative;
-  // display: block;
   width: fit-content;
 }
 
@@ -58,9 +40,16 @@
   color: white;
 }
 
-.account {
+.right-menu {
   position: absolute;
   right: 0;
+  justify-content: right;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.account {
   margin-right: 2%;
   justify-content: center;
 }
@@ -110,4 +99,28 @@
 
 .navbar {
   background-color: mat.get-theme-color($theme, primary, 30);
+}
+
+.hamburger-menu {
+  display: none;
+}
+
+.hamburger-icon {
+  font-size: 1.5rem !important;
+  width: 100%;
+  margin: auto !important;
+}
+
+@media (max-width: 960px) {
+  .hamburger-menu {
+    display: block;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .title{
+    display: none;
+  }
 }

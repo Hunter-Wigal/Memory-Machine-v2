@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-@if(authenticated || homePage){
+@if((authenticated || homePage)){
 <router-outlet />
 } @else {
 <app-login-message />
