@@ -73,13 +73,14 @@
 
   <div class="event-add">
     <form class="event-form" [formGroup]="eventForm" (ngSubmit)="addEvent()">
-      <mat-form-field>
+      <mat-form-field class="event-input">
         <mat-label>New Event</mat-label>
         <input
           matInput
           placeholder="Event Name"
           value=""
           formControlName="eventName"
+
         />
       </mat-form-field>
 

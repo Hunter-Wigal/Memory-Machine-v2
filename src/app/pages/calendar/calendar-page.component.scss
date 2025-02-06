@@ -2,6 +2,13 @@
 
 .center{
   justify-content: center;
+  text-align: center;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
 }
 
 .line{
@@ -11,21 +18,32 @@
 .calendar-col{
   display: block;
   margin-inline: auto;
-  width: 40%;
+  min-width: 40%;
 }
 
 .events-col{
   border: 1px solid white;
   border-radius: 5%;
-  margin-inline: 5%;
+  margin-inline: auto;
   display: flex;
-  width: 40%;
+  min-width: 40%;
+  flex-direction: column;
 }
 
 .events{
-  flex-direction: col;
+  flex-direction: column;
 }
 
 .container{
   margin-top: 2%;
+}
+
+@media (max-width: 630px){
+  .calendar-col{
+    width: 75%;
+  }
+
+  .events-col{
+    width: 75%;
+  }
 }
