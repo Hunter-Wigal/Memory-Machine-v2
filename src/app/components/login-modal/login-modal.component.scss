@@ -7,6 +7,16 @@
 }
 
 .submit-btn{
-  display: block;
-  margin-inline: auto;
+  display: inline-block;
+  width: 25%;
+}
+
+.remember-btn{
+  position: relative;
+  // margin-right: 0;
+}
+
+.break{
+  display: flex;
+  justify-content: space-around;
 }

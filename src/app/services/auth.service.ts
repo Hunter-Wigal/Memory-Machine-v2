@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { FirebaseApp } from '@angular/fire/app';
 import {
   Auth,
@@ -8,7 +9,9 @@ import {
   User,
   updateProfile,
   browserSessionPersistence,
+  Persistence,
 } from '@angular/fire/auth';
+import { platform } from 'os';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +20,24 @@ import {
 export class AuthService {
   private auth: Auth;
   private currUser: User | null;
+  private browserID: object;
 
-  constructor(private app: FirebaseApp) {
-    // Initialize Firebase Authentication and get a reference to the service
-    this.auth = getAuth(app);
-    this.auth.setPersistence(browserSessionPersistence);
+  constructor(
+    private app: FirebaseApp,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
     this.currUser = null;
+    this.browserID = platformId;
+    this.auth = getAuth(this.app);
+  }
+
+  ngOnInit(): void {
+    // Initialize Firebase Authentication and get a reference to the service
+    this.auth.setPersistence(browserSessionPersistence);
+  }
+
+  public isBrowser(): boolean {
+    return isPlatformBrowser(this.browserID);
   }
 
   /**
@@ -30,6 +45,7 @@ export class AuthService {
    * @param func The function that will accept the user as a parameter whenever the authstate changed
    */
   public setUserFunc(func: any) {
+    if (!this.isBrowser()) return;
     this.auth.onAuthStateChanged((user) => {
       this.currUser = user;
       func(user);
@@ -100,5 +116,9 @@ export class AuthService {
 
   public authenticated(): boolean {
     return this.currUser != null;
+  }
+
+  public setPersistance(persistance: Persistence) {
+    this.auth.setPersistence(persistance);
   }
 }

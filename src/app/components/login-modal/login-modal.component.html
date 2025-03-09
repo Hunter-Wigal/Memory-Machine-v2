@@ -10,7 +10,10 @@
       <mat-label>Password</mat-label>
       <input type="password" matInput placeholder="Password" value="" formControlName="passwordFormControl">
     </mat-form-field>
-    <button mat-flat-button class="submit-btn" (click)="login()">Submit</button>
+    <div class="break">
+      <button mat-flat-button class="submit-btn" (click)="login()">Submit</button>
+      <mat-checkbox class="submit-btm" (change)="updateChecked($event.checked)">Remember Me</mat-checkbox>
+    </div>
   </form>
 </div>
 <div mat-dialog-actions>

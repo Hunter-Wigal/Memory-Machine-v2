@@ -31,7 +31,7 @@
     </mat-menu>
     <div class="account">
       @if(currUser == null){
-      <!-- <app-auth-modal-buttons/> -->
+      <app-auth-modal-buttons style="width:100%; display:flex; justify-content: center"/>
       }
       @else {
       <button class="account-button" (click)="accountDropdown(dropdown)"><mat-icon class="account-icon"

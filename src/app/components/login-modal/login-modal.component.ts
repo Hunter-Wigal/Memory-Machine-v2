@@ -15,6 +15,8 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
 
 @Component({
   selector: 'app-login-modal',
@@ -26,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
+    MatCheckboxModule
   ],
   templateUrl: './login-modal.component.html',
   styleUrl: './login-modal.component.scss',
@@ -33,7 +36,10 @@ import { MatInputModule } from '@angular/material/input';
 export class LoginModalComponent {
   readonly dialogRef = inject(MatDialogRef<LoginModalComponent>);
   // readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  constructor(private as: AuthService) {}
+  checked: boolean;
+  constructor(private as: AuthService) {
+    this.checked = false;
+  }
 
   loginForm = new FormGroup({
     emailFormControl: new FormControl('', [
@@ -49,6 +55,8 @@ export class LoginModalComponent {
   }
 
   public async login() {
+    let persistance = (this.checked) ? browserLocalPersistence : browserSessionPersistence;
+    this.as.setPersistance(persistance);
     let user = {
       email: this.loginForm.value?.emailFormControl,
       password: this.loginForm.value?.passwordFormControl,
@@ -64,5 +72,9 @@ export class LoginModalComponent {
         this.dialogRef.close();
         location.reload();
       });
+  }
+
+  updateChecked(checked: boolean){
+    this.checked = checked;
   }
 }

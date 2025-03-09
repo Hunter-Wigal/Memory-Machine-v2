@@ -1,4 +1,10 @@
-import { AfterContentInit, Component, ElementRef, NgModule, ViewChild } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  ElementRef,
+  NgModule,
+  ViewChild,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
@@ -9,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatNavList, MatListItem } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { AuthModalButtonsComponent } from '../auth-modal-buttons/auth-modal-buttons.component';
 
 @Component({
   selector: 'app-navbar',
@@ -22,29 +29,33 @@ import { MatMenuModule } from '@angular/material/menu';
     MatListItem,
     MatIcon,
     MatButtonModule,
-    MatMenuModule
-],
+    MatMenuModule,
+    AuthModalButtonsComponent,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements AfterContentInit {
   protected currUser: User | null;
-
+  private userFuncSet: boolean = false;
   public router: Router;
+  private userSet: boolean = false;
 
   constructor(private authService: AuthService, router: Router) {
     this.currUser = this.authService.getCurrUser();
-    this.authService.setUserFunc((user: User) => {
-      this.currUser = user;
-    });
     this.router = router;
   }
 
   ngAfterContentInit() {
+    if (!this.userFuncSet) {
+      this.authService.setUserFunc((user: User) => {
+        if(!this.userSet)
+        this.currUser = user;
+      });
+      this.userFuncSet = true;
+    }
     this.currUser = this.authService.getCurrUser();
   }
-
-
 
   public async signOut() {
     await this.authService.signOut();

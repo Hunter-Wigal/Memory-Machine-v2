@@ -17,30 +17,26 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './login-message.component.scss',
 })
 export class LoginMessageComponent implements AfterContentInit {
-  timerFinished = false;
-  timerRunning = false;
+  authVerified = false;
   private isBrowser: boolean;
 
   constructor(
     private as: AuthService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
-    this.timerFinished = false;
+    this.authVerified = false;
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
   ngAfterContentInit(): void {
-    this.timerFinished = false;
-    if (!this.timerRunning && this.isBrowser) {
-      this.timerRunning = true;
+    if (!this.authVerified && this.isBrowser) {
       this.checkAuth();
     }
   }
 
   async checkAuth() {
-    return setTimeout(() => {
-      this.timerFinished = true;
-      this.timerRunning = false;
-    }, 3000);
+    if(!this.as.authenticated() && this.as.isBrowser()){
+      this.authVerified = true;
+    }
   }
 }
