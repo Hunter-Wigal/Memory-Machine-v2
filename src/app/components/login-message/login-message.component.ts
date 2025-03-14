@@ -24,6 +24,7 @@ export class LoginMessageComponent implements AfterContentInit {
     private as: AuthService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
+
     this.authVerified = false;
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -35,8 +36,9 @@ export class LoginMessageComponent implements AfterContentInit {
   }
 
   async checkAuth() {
-    if(!this.as.authenticated() && this.as.isBrowser()){
-      this.authVerified = true;
+    if(!this.as.authenticated() && this.as.isBrowser() && !Boolean(localStorage.getItem("loggedIn"))){
+
+          this.authVerified = true;
     }
   }
 }

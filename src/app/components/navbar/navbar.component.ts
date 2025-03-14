@@ -17,6 +17,11 @@ import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthModalButtonsComponent } from '../auth-modal-buttons/auth-modal-buttons.component';
 
+interface NavLink{
+  path: string,
+  displayName: string
+}
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -40,6 +45,13 @@ export class NavbarComponent implements AfterContentInit {
   private userFuncSet: boolean = false;
   public router: Router;
   private userSet: boolean = false;
+  protected links: Array<NavLink> = [
+    { path: '/tasks', displayName: 'Tasks' },
+    { path: '/calendar', displayName: 'Calendar' },
+    { path: '/schedule', displayName: 'Schedule' },
+    { path: '/projects', displayName: 'Projects' },
+    { path: '/weekly-tasks', displayName: 'Weekly' },
+  ];
 
   constructor(private authService: AuthService, router: Router) {
     this.currUser = this.authService.getCurrUser();
@@ -49,8 +61,7 @@ export class NavbarComponent implements AfterContentInit {
   ngAfterContentInit() {
     if (!this.userFuncSet) {
       this.authService.setUserFunc((user: User) => {
-        if(!this.userSet)
-        this.currUser = user;
+        if (!this.userSet) this.currUser = user;
       });
       this.userFuncSet = true;
     }

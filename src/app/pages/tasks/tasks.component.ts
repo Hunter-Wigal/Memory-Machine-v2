@@ -1,4 +1,4 @@
-import { Component, ViewChild, model } from '@angular/core';
+import { Component, OnInit, ViewChild, model } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FirestoreService } from '../../services/firestore.service';
 import {
@@ -48,7 +48,7 @@ export interface Task {
     MatIconModule,
   ],
 })
-export class TasksComponent {
+export class TasksComponent implements OnInit{
   @ViewChild('taskForm') taskForm!: NgForm;
   @ViewChild('matTable') table!: MatTable<any>;
   @ViewChild(MatSort) sort!: MatSort;
@@ -69,6 +69,10 @@ export class TasksComponent {
     if (window.innerWidth <= 500) {
       this.columnsToDisplay = ['title', 'date', 'delete'];
     }
+  }
+
+  ngOnInit(): void {
+    this.updatetasks();
   }
 
   updatetasks() {

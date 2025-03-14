@@ -38,9 +38,7 @@ export class AppComponent {
     private route: ActivatedRoute,
     private router: Router,
     private as: AuthService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     //TODO figure out observables
@@ -64,11 +62,11 @@ export class AppComponent {
       });
 
     this.as.setUserFunc(() => {
+      this.authenticated = this.as.authenticated();
+
       if (typeof window !== 'undefined' && window.localStorage) {
         localStorage.setItem('loggedIn', this.authenticated.toString());
       }
-
-      this.authenticated = this.as.authenticated();
     });
   }
 }

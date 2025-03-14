@@ -4,6 +4,8 @@ import { TasksComponent } from './pages/tasks/tasks.component';
 import { CalendarPage } from './pages/calendar/calendar-page.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
+import { Component } from '@angular/core';
+import { WeeklyTasksComponent } from './components/weekly-tasks/weekly-tasks.component';
 
 export const routes: Routes = [
   {
@@ -35,5 +37,10 @@ export const routes: Routes = [
     path: 'projects',
     component: ProjectsComponent,
     data: { title: 'Projects' },
+  },
+  {
+    path: 'weekly-tasks',
+    component: WeeklyTasksComponent,
+    data: {title: 'Weekly Tasks'}
   },
 ];
