@@ -1,26 +1,23 @@
 @use "@angular/material" as mat;
 @include mat.core();
+@import "./theme.scss";
+
 
 :root {
   --mat-app-background-color: #101414;
 }
 
-$theme: mat.define-theme(
-  (
-    color: (
-      theme-type: dark,
-      primary: mat.$cyan-palette,
-      tertiary: mat.$orange-palette
-    ),
-    typography: (
-      brand-family: "Comic Sans",
-      bold-weight: 900,
-    ),
-    density: (
-      scale: -1,
-    ),
-  )
-);
+@mixin generate-col-classes($max: 10){
+  @for $i from 1 through $max{
+    .col-#{$i}{
+      display: flex;
+      flex: #{$i};
+
+    }
+  }
+}
+
+
 
 html {
   @include mat.all-component-themes($theme);
@@ -40,6 +37,7 @@ body {
   width: 100%;
   position: absolute;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 
 
@@ -94,3 +92,5 @@ dialog[open] {
 .danger {
   color: mat.get-theme-color($theme, error);
 }
+
+@include generate-col-classes(10);

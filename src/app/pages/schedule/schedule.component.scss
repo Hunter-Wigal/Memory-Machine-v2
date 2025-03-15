@@ -1,7 +1,7 @@
 // @import "@angular/material/prebuilt-themes/azure-blue.css";
 @use "@angular/material" as mat;
-@import '../../../styles.scss';
-
+@include mat.core();
+@import "../../../theme.scss";
 
 
 .table-container {

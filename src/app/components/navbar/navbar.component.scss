@@ -1,6 +1,8 @@
 @use "@angular/material" as mat;
 @include mat.core();
-@import "../../../styles.scss";
+@import "../../../theme.scss";
+
+// $theme: mat.define-theme();
 
 .logo {
   width: 48px;

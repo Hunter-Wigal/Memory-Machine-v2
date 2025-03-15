@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row center-text">
+    <h1 class="">Weekly Tasks Page</h1>
+  </div>
+  <div class="row center-text">
+    <p>This page is for keeping track of tasks weekly. They may happen on a specific day or different days each week.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-3">
+      <div class="tasks">
+        <div class="header">
+          <h1>Tasks</h1>
+        </div>
+        <div class="body">
+          @for(task of taskList; track $index){
+          <div class="task">
+            <p style="border-right: 1px solid white">{{task.taskName}}</p>
+
+            <button mat-button style="width: fit-content" (click)="deleteTask(task.taskID)">
+              <mat-icon style="margin-inline: auto; color: red" fontIcon="delete" />
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="weekly-schedule">
+        <div class="header">
+          <h1>Weekly Schedule</h1>
+        </div>
+        <div class="cal-body">
+          <!-- Headers -->
+          <h2>Sunday</h2>
+          <h2>Monday</h2>
+          <h2>Tuesday</h2>
+          <h2>Wednesday</h2>
+          <h2>Thursday</h2>
+          <h2>Friday</h2>
+          <h2>Saturday</h2>
+          @for(row of taskRow; track $index){
+          <p>{{row.sunday}}</p>
+          <p>{{row.monday}}</p>
+          <p>{{row.tuesday}}</p>
+          <p>{{row.wednesday}}</p>
+          <p>{{row.thursday}}</p>
+          <p>{{row.friday}}</p>
+          <p>{{row.saturday}}</p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+      <form class="task-form">
+        <mat-form-field style="width: 60%">
+          <input matInput type="text" placeholder="New Task Name">
+        </mat-form-field>
+        <button mat-stroked-button>Add</button>
+      </form>
+    </div>
+    <div class="col-7"></div>
+  </div>
+</div>
