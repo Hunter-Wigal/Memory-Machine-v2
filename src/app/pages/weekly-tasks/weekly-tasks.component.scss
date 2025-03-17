@@ -8,28 +8,29 @@
   margin-inline: 7.5%;
 
   .header {
-    border-bottom: 1px dashed white;
+    border-bottom: 1px solid white;
   }
 
   .body {
     min-height: 20vh;
     display: flex;
     flex-direction: column;
-    margin-top: 1%;
+    // padding-top: 1%;
 
-    .task{
+    .task {
       width: 100%;
       font-size: 22px;
       display: grid;
       grid-template-columns: 80% 20%;
       align-items: center;
-      justify-items: space-between;
       border-bottom: 1px solid white;
       margin: 0;
 
-      p{
+      .task-name {
         margin: 0;
         padding: 0.3rem 0;
+        background-color: darkgray;
+        z-index: 2;
       }
     }
   }
@@ -62,10 +63,9 @@
     height: 30%;
     display: flex;
 
-    h1{
+    h1 {
       margin: 0 auto;
       align-self: center;
-
     }
   }
 
@@ -75,6 +75,10 @@
     height: 70%;
     display: grid;
     grid-template-columns: $col-width $col-width $col-width $col-width $col-width $col-width $col-width;
+
+    h2 {
+      align-content: center;
+    }
   }
 
   h2 {
@@ -95,15 +99,13 @@
   }
 }
 
-.task-form{
-    margin-inline: 7.5%;
-    margin-top: 2%;
-    width: 100%;
+.task-form {
+  margin-inline: 7.5%;
+  margin-top: 2%;
+  width: 100%;
 
-    button{
-      width: 30%;
-      margin-left: 5%;
-    }
-
-
+  button {
+    width: 30%;
+    margin-left: 5%;
+  }
 }

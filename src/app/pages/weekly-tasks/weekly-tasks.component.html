@@ -15,11 +15,13 @@
         </div>
         <div class="body">
           @for(task of taskList; track $index){
-          <div class="task">
-            <p style="border-right: 1px solid white">{{task.taskName}}</p>
+          <div class="task mat-elevation-z8" id="task-{{task.taskID}}" >
+            <div draggable="false" class="task-name" (mousedown)="mouseDown($event, 'task-'+task.taskID+'-draggable')" id="task-{{task.taskID}}-draggable" (mouseup)="mouseUp($event)">
+              <p style="background-color:blue; width: fit-content; margin-inline: auto;z-index: -1;">{{task.taskName}}</p>
+            </div>
 
-            <button mat-button style="width: fit-content" (click)="deleteTask(task.taskID)">
-              <mat-icon style="margin-inline: auto; color: red" fontIcon="delete" />
+            <button mat-button style="width: fit-contentl; justify-self: center" (click)="deleteTask(task.taskID)">
+              <mat-icon style="margin-inline: auto; color: red;" fontIcon="delete" />
             </button>
           </div>
           }
