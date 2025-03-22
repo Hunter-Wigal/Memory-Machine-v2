@@ -15,9 +15,11 @@
         </div>
         <div class="body">
           @for(task of taskList; track $index){
-          <div class="task mat-elevation-z8" id="task-{{task.taskID}}" >
-            <div draggable="false" class="task-name" (mousedown)="mouseDown($event, 'task-'+task.taskID+'-draggable')" id="task-{{task.taskID}}-draggable" (mouseup)="mouseUp($event)">
-              <p style="background-color:blue; width: fit-content; margin-inline: auto;z-index: -1;">{{task.taskName}}</p>
+          <div class="task mat-elevation-z8" id="task-{{task.taskID}}">
+            <div draggable="false" class="task-name" (mousedown)="mouseDown($event, 'task-'+task.taskID+'-draggable')"
+              id="task-{{task.taskID}}-draggable" (mouseup)="mouseUp($event)">
+              <p style="background-color:blue; width: fit-content; margin-inline: auto;z-index: -1;">{{task.taskName}}
+              </p>
             </div>
 
             <button mat-button style="width: fit-contentl; justify-self: center" (click)="deleteTask(task.taskID)">
@@ -42,6 +44,13 @@
           <h2>Thursday</h2>
           <h2>Friday</h2>
           <h2>Saturday</h2>
+          <p id="drop-sunday" (mouseenter)="highlight('drop-sunday', 'yellow')" (mouseleave)="highlight('drop-sunday', '--mat-app-background-color')"></p>
+          <p id="drop-monday"></p>
+          <p id="drop-tuesday"></p>
+          <p id="drop-wednesday"></p>
+          <p id="drop-thursday"></p>
+          <p id="drop-friday"></p>
+          <p id="drop-saturday"></p>
           @for(row of taskRow; track $index){
           <p>{{row.sunday}}</p>
           <p>{{row.monday}}</p>

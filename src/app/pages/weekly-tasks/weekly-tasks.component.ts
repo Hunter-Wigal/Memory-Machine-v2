@@ -28,9 +28,11 @@ interface WeeklyTask{
 export class WeeklyTasksComponent {
   protected taskRow: Array<Week> = [];
   protected taskList: Array<WeeklyTask> = [];
-  protected dragging: HTMLElement | null = null;
+  public dragging: HTMLElement | null = null;
   protected draggingX = 0;
   protected draggingY = 0;
+  controller!: AbortController;
+
 
   constructor() {
     this.taskRow.push({
@@ -48,39 +50,69 @@ export class WeeklyTasksComponent {
 
   deleteTask(taskId: string) {}
 
-  eventListener(event: MouseEvent) {
-    this.setElementPosition(event.clientX, event.clientY);
-    console.log(event);
-    return this;
-  }
 
   mouseDown(event: MouseEvent, id: string) {
     this.dragging = document.getElementById(id);
     if(!this.dragging)
       return
+
     this.draggingX = this.dragging.getBoundingClientRect().x;
     this.draggingY = this.dragging.getBoundingClientRect().y;
-    let width = this.dragging.getBoundingClientRect().width;
+    // let width = this.dragging.getBoundingClientRect().width;
+    this.dragging.style.zIndex = '-1';
 
     this.dragging.style.position = "absolute";
-    this.setElementPosition(this.draggingX, this.draggingY);
-    this.dragging.style.width = width + "px";
+    this.dragging.style.width = 100 + "px";
     this.dragging.style.zIndex = '100';
-
-    console.log(this.dragging);
-    // this.dragging = event.target;
-    document.addEventListener('mousemove', ($event)=>{this.eventListener(<MouseEvent>$event)});
+    this.controller = new AbortController();
+    document.addEventListener('mousemove', ($event)=>{this.setElementPosition($event)}, {signal: this.controller.signal});
   }
 
   mouseUp(event: Event) {
-    document.removeEventListener('mousemove', ($event)=>{this.eventListener(<MouseEvent>$event);});
+    console.log("called")
+    this.controller.abort();
+
   }
 
-  setElementPosition(x: number, y: number){
+  setElementPosition(event: MouseEvent){
+    if (!this.dragging) return;
+
+    let sunday = document.getElementById("drop-sunday");
+    if(!sunday)return;
+
+    let rects = sunday.getBoundingClientRect();
+
+    if(event.clientX > rects.x && event.clientY > rects.y && event.clientX < rects.x + rects.width && event.clientY < rects.y + rects.height){
+      this.highlight("drop-sunday", "yellow");
+    }
+    else{
+      this.highlight('drop-sunday', '--mat-app-background-color');
+    }
+
+
+    let x = event.clientX;
+    let y = event.clientY;
     if(!this.dragging)
       return;
-    console.log(this.dragging.style.x);
-    this.dragging.style.left = x + 'px';
-    this.dragging.style.top = y + 'px';
+    // console.log(this.dragging.style.top);
+    // console.log(y);
+    let height = this.dragging.clientHeight;
+    let width = this.dragging.clientWidth;
+
+    this.dragging.style.left = (x - width / 2) + 'px';
+    this.dragging.style.top = (y - height- 10) + 'px';
+  }
+
+  highlight(id: string, color: string){
+    let drop = document.getElementById(id);
+    console.log(color);
+    if(!drop)
+      return;
+
+    if(color.charAt(0) == '-')
+    drop.style.backgroundColor = drop.style.getPropertyValue('color');
+
+    else
+    drop.style.backgroundColor = color;
   }
 }
