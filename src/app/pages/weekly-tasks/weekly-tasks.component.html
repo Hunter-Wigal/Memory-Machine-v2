@@ -15,9 +15,9 @@
         </div>
         <div class="body">
           @for(task of taskList; track $index){
-          <div class="task mat-elevation-z8" id="task-{{task.taskID}}">
-            <div draggable="false" class="task-name" (mousedown)="mouseDown($event, 'task-'+task.taskID+'-draggable')"
-              id="task-{{task.taskID}}-draggable" (mouseup)="mouseUp($event)">
+          <div class="task mat-elevation-z8" id="task-{{task.taskID}}" (mousedown)="mouseDown($event, 'task-'+task.taskID+'-draggable')" >
+            <div draggable="false" class="task-name" id="task-{{task.taskID}}-draggable"
+               (mouseup)="mouseUp($event)">
               <p style="background-color:blue; width: fit-content; margin-inline: auto;z-index: -1;">{{task.taskName}}
               </p>
             </div>
@@ -37,29 +37,53 @@
         </div>
         <div class="cal-body">
           <!-- Headers -->
-          <h2>Sunday</h2>
-          <h2>Monday</h2>
-          <h2>Tuesday</h2>
-          <h2>Wednesday</h2>
-          <h2>Thursday</h2>
-          <h2>Friday</h2>
-          <h2>Saturday</h2>
-          <p id="drop-sunday" (mouseenter)="highlight('drop-sunday', 'yellow')" (mouseleave)="highlight('drop-sunday', '--mat-app-background-color')"></p>
-          <p id="drop-monday"></p>
-          <p id="drop-tuesday"></p>
-          <p id="drop-wednesday"></p>
-          <p id="drop-thursday"></p>
-          <p id="drop-friday"></p>
-          <p id="drop-saturday"></p>
+          <div class="row headers">
+            <div class="col">
+              <h2>Sunday</h2>
+            </div>
+            <div class="col">
+              <h2>Monday</h2>
+            </div>
+            <div class="col">
+              <h2>Tuesday</h2>
+            </div>
+            <div class="col">
+              <h2>Wednesday</h2>
+            </div>
+            <div class="col">
+              <h2>Thursday</h2>
+            </div>
+            <div class="col">
+              <h2>Friday</h2>
+            </div>
+            <div class="col">
+              <h2>Saturday</h2>
+            </div>
+          </div>
           @for(row of taskRow; track $index){
-          <p>{{row.sunday}}</p>
-          <p>{{row.monday}}</p>
-          <p>{{row.tuesday}}</p>
-          <p>{{row.wednesday}}</p>
-          <p>{{row.thursday}}</p>
-          <p>{{row.friday}}</p>
-          <p>{{row.saturday}}</p>
+          <div class="row">
+            <div class="col table-task">{{row.sunday}}</div>
+            <div class="col table-task">{{row.monday}}</div>
+            <div class="col table-task">{{row.tuesday}}</div>
+            <div class="col table-task">{{row.wednesday}}</div>
+            <div class="col table-task">{{row.thursday}}</div>
+            <div class="col table-task">{{row.friday}}</div>
+            <div class="col table-task">{{row.saturday}}</div>
+          </div>
           }
+
+          <div class="row" id="addAbove" #addAbove>
+            <div class="col table-task drop" id="drop-sunday" (mouseenter)="highlight('drop-sunday', 'yellow')"
+              (mouseleave)="highlight('drop-sunday', '--mat-app-background-color')">
+
+            </div>
+            <div class="col table-task drop" id="drop-monday"></div>
+            <div class="col table-task drop" id="drop-tuesday"></div>
+            <div class="col table-task drop" id="drop-wednesday"></div>
+            <div class="col table-task drop" id="drop-thursday"></div>
+            <div class="col table-task drop" id="drop-friday"></div>
+            <div class="col table-task drop" id="drop-saturday"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -75,4 +99,14 @@
     </div>
     <div class="col-7"></div>
   </div>
+</div>
+
+<div class="new-row row" #newRow>
+  <div class="col table-task" id="new-sunday"></div>
+  <div class="col table-task" id="new-monday"></div>
+  <div class="col table-task" id="new-tuesday"></div>
+  <div class="col table-task" id="new-wednesday"></div>
+  <div class="col table-task" id="new-thursday"></div>
+  <div class="col table-task" id="new-friday"></div>
+  <div class="col table-task" id="new-saturday"></div>
 </div>

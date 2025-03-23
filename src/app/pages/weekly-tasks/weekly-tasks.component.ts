@@ -13,9 +13,9 @@ interface Week {
   saturday: string | null;
 }
 
-interface WeeklyTask{
-  taskID: string,
-  taskName:String
+interface WeeklyTask {
+  taskID: string;
+  taskName: String;
 }
 
 @Component({
@@ -33,6 +33,8 @@ export class WeeklyTasksComponent {
   protected draggingY = 0;
   controller!: AbortController;
 
+  @ViewChild('addAbove') addAbove!: ElementRef;
+  @ViewChild('newRow') newRow!: ElementRef;
 
   constructor() {
     this.taskRow.push({
@@ -50,69 +52,117 @@ export class WeeklyTasksComponent {
 
   deleteTask(taskId: string) {}
 
-
   mouseDown(event: MouseEvent, id: string) {
     this.dragging = document.getElementById(id);
-    if(!this.dragging)
-      return
+    if (!this.dragging) return;
+
+    this.dragging = <HTMLElement>this.dragging.cloneNode(true);
+    this.dragging.className += 'mat-elevation-z8';
+    this.dragging.className += ' task-drag';
+    this.dragging.onmouseup = (event) => {
+      this.mouseUp(event);
+    };
+    document.body.append(this.dragging);
+    console.log(this.dragging);
 
     this.draggingX = this.dragging.getBoundingClientRect().x;
     this.draggingY = this.dragging.getBoundingClientRect().y;
     // let width = this.dragging.getBoundingClientRect().width;
     this.dragging.style.zIndex = '-1';
 
-    this.dragging.style.position = "absolute";
-    this.dragging.style.width = 100 + "px";
+    // Change style and current position
+    this.dragging.style.position = 'absolute';
+    this.dragging.style.width = 100 + 'px';
     this.dragging.style.zIndex = '100';
+    let height = this.dragging.clientHeight;
+    let width = this.dragging.clientWidth;
+
+    this.dragging.style.left = event.clientX - width / 2 + 'px';
+    this.dragging.style.top = event.clientY - height / 2 + 'px'; // - height - 10 + 'px';
     this.controller = new AbortController();
-    document.addEventListener('mousemove', ($event)=>{this.setElementPosition($event)}, {signal: this.controller.signal});
+    document.addEventListener(
+      'mousemove',
+      ($event) => {
+        this.setElementPosition($event);
+      },
+      { signal: this.controller.signal }
+    );
+
+    document.body.classList.add("noselect")
   }
 
-  mouseUp(event: Event) {
-    console.log("called")
+  mouseUp(event: MouseEvent) {
     this.controller.abort();
 
-  }
-
-  setElementPosition(event: MouseEvent){
-    if (!this.dragging) return;
-
-    let sunday = document.getElementById("drop-sunday");
-    if(!sunday)return;
+    let sunday = document.getElementById('drop-sunday');
+    if (!sunday) return event;
 
     let rects = sunday.getBoundingClientRect();
 
-    if(event.clientX > rects.x && event.clientY > rects.y && event.clientX < rects.x + rects.width && event.clientY < rects.y + rects.height){
-      this.highlight("drop-sunday", "yellow");
+    if (
+      event.clientX > rects.x &&
+      event.clientY > rects.y &&
+      event.clientX < rects.x + rects.width &&
+      event.clientY < rects.y + rects.height
+    ) {
+      console.log('append');
+      //Append
+      this.addNewRow();
+    } else {
+      // Send back
     }
-    else{
+
+    return event;
+  }
+
+  setElementPosition(event: MouseEvent) {
+    if (!this.dragging) return;
+
+    let sunday = document.getElementById('drop-sunday');
+    if (!sunday) return;
+
+    let rects = sunday.getBoundingClientRect();
+
+    if (
+      event.clientX > rects.x &&
+      event.clientY > rects.y &&
+      event.clientX < rects.x + rects.width &&
+      event.clientY < rects.y + rects.height
+    ) {
+      this.highlight('drop-sunday', 'yellow');
+    } else {
       this.highlight('drop-sunday', '--mat-app-background-color');
     }
 
-
     let x = event.clientX;
     let y = event.clientY;
-    if(!this.dragging)
-      return;
+    if (!this.dragging) return;
     // console.log(this.dragging.style.top);
     // console.log(y);
     let height = this.dragging.clientHeight;
     let width = this.dragging.clientWidth;
 
-    this.dragging.style.left = (x - width / 2) + 'px';
-    this.dragging.style.top = (y - height- 10) + 'px';
+    this.dragging.style.left = x - width / 2 + 'px';
+    this.dragging.style.top = y - height / 2 + 'px';// - height - 10 + 'px';
   }
 
-  highlight(id: string, color: string){
+  highlight(id: string, color: string) {
     let drop = document.getElementById(id);
     console.log(color);
-    if(!drop)
-      return;
+    if (!drop) return;
 
-    if(color.charAt(0) == '-')
-    drop.style.backgroundColor = drop.style.getPropertyValue('color');
+    if (color.charAt(0) == '-')
+      drop.style.backgroundColor = drop.style.getPropertyValue('color');
+    else drop.style.backgroundColor = color;
+  }
 
-    else
-    drop.style.backgroundColor = color;
+  addNewRow() {
+    console.log(this.newRow);
+    let newerRow = this.newRow.nativeElement.cloneNode(true);
+    newerRow.classList.remove("new-row");
+    newerRow.classList.add("row");
+
+
+    this.addAbove.nativeElement.insertAdjacentElement("beforebegin", newerRow);
   }
 }

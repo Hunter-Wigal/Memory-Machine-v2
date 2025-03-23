@@ -20,8 +20,8 @@
     .task {
       width: 100%;
       font-size: 22px;
-      display: grid;
-      grid-template-columns: 80% 20%;
+      display: flex;
+      flex: 1 1;
       align-items: center;
       border-bottom: 1px solid white;
       margin: 0;
@@ -31,6 +31,7 @@
         padding: 0.3rem 0;
         background-color: darkgray;
         border: 1px solid black;
+        width: 100%;
       }
     }
   }
@@ -39,7 +40,6 @@
 .row {
   display: flex;
   flex-direction: row;
-  flex: 1 1;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -48,7 +48,7 @@
   display: flex;
   flex-direction: column;
   min-width: fit-content;
-  flex: 1 1;
+  flex: 1;
 }
 
 .weekly-schedule {
@@ -69,12 +69,12 @@
     }
   }
 
-  $col-width: math.percentage(math.div(1, 7));
+
   // Calendar / schedule body
   .cal-body {
     height: 70%;
-    display: grid;
-    grid-template-columns: $col-width $col-width $col-width $col-width $col-width $col-width $col-width;
+    display: flex;
+    flex-direction: column;
 
     h2 {
       align-content: center;
@@ -109,3 +109,36 @@
     margin-left: 5%;
   }
 }
+
+
+.headers h2{
+  width: 100%;
+}
+
+.table-task{
+  border-inline: 1px solid white;
+  text-align: center;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid white;
+}
+
+
+.drop{
+  height: 100%;
+}
+
+.new-row{
+  display: none;
+}
+
+
+.task-drag{
+
+        padding: 0.3rem 0;
+        background-color: darkgray;
+        border: 1px solid black;
+
+}
+
+
