@@ -13,9 +13,7 @@ import {
 } from '@angular/fire/auth';
 import { platform } from 'os';
 
-@Injectable({
-  providedIn: 'root',
-})
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private auth: Auth;
