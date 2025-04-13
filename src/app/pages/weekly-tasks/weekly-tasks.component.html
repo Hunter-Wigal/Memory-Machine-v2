@@ -33,58 +33,69 @@
       </div>
     </div>
     <div class="col-7">
-      <div class="weekly-schedule">
-        <div class="header">
-          <h1>Weekly Schedule</h1>
-        </div>
-        <div class="cal-body">
+      <table class="weekly-schedule">
+        <tr class="header">
+          <th colspan="7">Weekly Schedule</th>
+        </tr>
+        <tbody class="cal-body">
           <!-- Headers -->
-          <div class="row headers">
-            <div class="col">
+          <tr class="headers">
+            <td class="">
               <h2>Sunday</h2>
-            </div>
-            <div class="col">
+            </td>
+            <td class="">
               <h2>Monday</h2>
-            </div>
-            <div class="col">
+            </td>
+            <td class="">
               <h2>Tuesday</h2>
-            </div>
-            <div class="col">
+            </td>
+            <td class="">
               <h2>Wednesday</h2>
-            </div>
-            <div class="col">
+            </td>
+            <td class="">
               <h2>Thursday</h2>
-            </div>
-            <div class="col">
+            </td>
+            <td class="">
               <h2>Friday</h2>
-            </div>
-            <div class="col">
+            </td>
+            <td class="">
               <h2>Saturday</h2>
-            </div>
-          </div>
+            </td>
+          </tr>
           @for(row of taskRow; track $index){
-          <div class="row">
-            <div class="col table-task">{{row.sunday}}</div>
-            <div class="col table-task">{{row.monday}}</div>
-            <div class="col table-task">{{row.tuesday}}</div>
-            <div class="col table-task">{{row.wednesday}}</div>
-            <div class="col table-task">{{row.thursday}}</div>
-            <div class="col table-task">{{row.friday}}</div>
-            <div class="col table-task">{{row.saturday}}</div>
-          </div>
+          <tr class="data-row">
+            <td class=" table-task"><div>{{row.sunday}}</div></td>
+            <td class=" table-task"><div>{{row.monday}}</div></td>
+            <td class=" table-task"><div>{{row.tuesday}}</div></td>
+            <td class=" table-task"><div>{{row.wednesday}}</div></td>
+            <td class=" table-task"><div>{{row.thursday}}</div></td>
+            <td class=" table-task"><div>{{row.friday}}</div></td>
+            <td class=" table-task"><div>{{row.saturday}}</div></td>
+          </tr>
           }
 
-          <div class="row" id="addAbove" #addAbove>
-            <div class="col table-task droppable" id="drop-sunday"></div>
-            <div class="col table-task droppable" id="drop-monday"></div>
-            <div class="col table-task droppable" id="drop-tuesday"></div>
-            <div class="col table-task droppable" id="drop-wednesday"></div>
-            <div class="col table-task droppable" id="drop-thursday"></div>
-            <div class="col table-task droppable" id="drop-friday"></div>
-            <div class="col table-task droppable" id="drop-saturday"></div>
-          </div>
-        </div>
-      </div>
+          <tr class="" id="addAbove" #addAbove>
+            <td class=" table-task droppable" id="drop-sunday"></td>
+            <td class=" table-task droppable" id="drop-monday"></td>
+            <td class=" table-task droppable" id="drop-tuesday"></td>
+            <td class=" table-task droppable" id="drop-wednesday"></td>
+            <td class=" table-task droppable" id="drop-thursday"></td>
+            <td class=" table-task droppable" id="drop-friday"></td>
+            <td class=" table-task droppable" id="drop-saturday"></td>
+          </tr>
+
+          <tr class="new-row" id="newRow" #newRow style="display: none">
+            <td class="table-task droppable" id="drop-sunday"></td>
+            <td class="table-task droppable" id="drop-monday"></td>
+            <td class="table-task droppable" id="drop-tuesday"></td>
+            <td class="table-task droppable" id="drop-wednesday"></td>
+            <td class="table-task droppable" id="drop-thursday"></td>
+            <td class="table-task droppable" id="drop-friday"></td>
+            <td class="table-task droppable" id="drop-saturday"></td>
+          </tr>
+
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="row">
@@ -100,12 +111,3 @@
   </div>
 </div>
 
-<div class="new-row row" #newRow>
-  <div class="col table-task" id="new-sunday"></div>
-  <div class="col table-task" id="new-monday"></div>
-  <div class="col table-task" id="new-tuesday"></div>
-  <div class="col table-task" id="new-wednesday"></div>
-  <div class="col table-task" id="new-thursday"></div>
-  <div class="col table-task" id="new-friday"></div>
-  <div class="col table-task" id="new-saturday"></div>
-</div>

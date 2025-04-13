@@ -173,10 +173,10 @@ export class DragDropAPI {
 
     droppable.each(function (index, element) {
       element.style.backgroundColor = originColor;
-      console.log(this);
+      // console.log(this);
 
       $(this).on( "mouseover", (event) => {
-        console.log("over");
+        // console.log("over");
         (<HTMLElement>event.target!).style.backgroundColor = "yellow";
       });
 
@@ -271,6 +271,9 @@ export class DragDropAPI {
           // newNode.style = <string><unknown>prevStyle;
           //TODO change this
           newNode.classList.remove("draggable");
+          newNode.style.position = "relative";
+          newNode.style.left = '0px';
+          newNode.style.top = "0px";
           newNode.classList.remove(this.draggingClass);
           newNode.classList.add(this.droppedClass);
           closest.className = "";

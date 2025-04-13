@@ -51,94 +51,47 @@
   flex: 1;
 }
 
-.weekly-schedule {
-  border: 2px solid white;
-  width: 90%;
-  height: 100%;
-  max-height: fit-content;
+.weekly-schedule{
+  border: 1px solid white;
+  width: 70%;
+  min-height: 50vh;
 
-  .header {
-    border-bottom: 2px solid white;
+  .header{
     text-align: center;
-    height: 30%;
-    display: flex;
+    font-size: 24px;
+    margin-inline: auto;
+  }
 
-    h1 {
-      margin: 0 auto;
-      align-self: center;
+  .cal-body{
+    tr{
+      border-bottom: 1px solid white;
+    }
+
+    td{
+      width: math.percentage(math.div(100, 7) * 0.01);
+      text-align: center;
+    }
+
+    #addAbove{
+      td{
+        height: 5rem;
+        max-height: 20px;
+      }
     }
   }
 
+}
 
-  // Calendar / schedule body
-  .cal-body {
-    height: 70%;
-    display: flex;
-    flex-direction: column;
+.dropped{
+  position: relative;
+}
 
-    h2 {
-      align-content: center;
-    }
-  }
+.data-row{
+  min-height: 20px;
+  height: 50px;
 
-  h2 {
-    text-align: center;
-    border-bottom: 1px solid white;
-    border-inline: 1px solid white;
-    margin: 0;
-    padding: 5% 0;
-  }
-
-  p {
-    border-inline: 1px solid white;
-    border-bottom: 1px solid white;
-    text-align: center;
-    margin: 0;
-    padding: 3% 0;
-    font-size: 18px;
+  td{
+    margin: 2%;
+    background-color: gray;
   }
 }
-
-.task-form {
-  margin-inline: 7.5%;
-  margin-top: 2%;
-  width: 100%;
-
-  button {
-    width: 30%;
-    margin-left: 5%;
-  }
-}
-
-
-.headers h2{
-  width: 100%;
-}
-
-.table-task{
-  border-inline: 1px solid white;
-  text-align: center;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid white;
-}
-
-
-.drop{
-  height: 100%;
-}
-
-.new-row{
-  display: none;
-}
-
-
-.task-drag{
-
-        padding: 0.3rem 0;
-        background-color: darkgray;
-        border: 1px solid black;
-
-}
-
-

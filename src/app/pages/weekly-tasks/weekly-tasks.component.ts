@@ -1,4 +1,10 @@
-import { Component, ElementRef, ViewChild, viewChild, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  viewChild,
+  AfterContentInit,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -27,7 +33,7 @@ interface WeeklyTask {
   templateUrl: './weekly-tasks.component.html',
   styleUrl: './weekly-tasks.component.scss',
 })
-export class WeeklyTasksComponent implements AfterContentInit{
+export class WeeklyTasksComponent implements AfterContentInit {
   protected taskRow: Array<Week> = [];
   protected taskList: Array<WeeklyTask> = [];
   public dragging: HTMLElement | null = null;
@@ -37,7 +43,7 @@ export class WeeklyTasksComponent implements AfterContentInit{
   private dragdropAPI: dd.DragDropAPI;
 
   @ViewChild('addAbove') addAbove!: ElementRef;
-  @ViewChild('newRow') newRow!: ElementRef;
+  @ViewChild('newRow', { static: true }) newRow!: ElementRef;
 
   constructor() {
     this.taskRow.push({
@@ -53,22 +59,48 @@ export class WeeklyTasksComponent implements AfterContentInit{
     this.taskList.push({ taskID: '0', taskName: 'Test' });
 
     this.dragdropAPI = new dd.DragDropAPI();
-
+    this.dragdropAPI.droppedClass = 'dropped';
+    this.dragdropAPI.dropFunction = this.onDrop;
   }
   ngAfterContentInit(): void {
     // throw new Error('Method not implemented.');
-   $(document).ready( ()=> {
-        this.dragdropAPI.appendDrag();
-        // $('.draggable').on('mouseover', (event) => {
-        //   console.log(event);
-        // });
-   });
-
+    $(document).ready(() => {
+      this.dragdropAPI.appendDrag();
+      // $('.draggable').on('mouseover', (event) => {
+      //   console.log(event);
+      // });
+    });
   }
 
+  // Element that it was dropped onto
+  onDrop(arg: HTMLElement) {
+    // TODO add a new row if the current row is the last
+    let currRow = arg.parentElement;
 
+    console.log(currRow?.nextElementSibling);
 
-  deleteTask(taskID: string){
+    let newRow = $('#newRow');
 
+    if (currRow && currRow.nextElementSibling && newRow.is(currRow.nextElementSibling)) {
+      let clone = $(newRow).clone();
+      clone.removeClass('new-row');
+      clone.addClass('data-row');
+      clone.attr('id', '');
+      clone.css('display', '');
+      clone.insertBefore(newRow);
+
+      this.setDroppableEventListeners();
+    }
   }
+
+  // Actually calls dragdrop service
+  setDroppableEventListeners() {
+    throw new Error('Method not implemented.');
+  }
+
+  setDraggableEventListeners() {
+    throw new Error('Method not implemented.');
+  }
+
+  deleteTask(taskID: string) {}
 }
