@@ -13,7 +13,16 @@ import { Project } from '../pages/projects/projects.component';
 import { EventType } from '../pages/schedule/schedule.component';
 import { AuthService } from './auth.service';
 import { isPlatformBrowser } from '@angular/common';
-
+interface Week {
+  row?: number;
+  sunday: string | null;
+  monday: string | null;
+  tuesday: string | null;
+  wednesday: string | null;
+  thursday: string | null;
+  friday: string | null;
+  saturday: string | null;
+}
 interface cachedProject {
   projectName: string;
   numTasks: number;
@@ -177,8 +186,49 @@ export class FirestoreService {
     return addDoc(scheduleColl, event);
   }
 
-  deleteFromSchedule(eventID: string){
+  deleteFromSchedule(eventID: string) {
     let scheduleColl = collection(this.db, this.userDoc.path, `schedule/`);
     return deleteDoc(doc(this.db, scheduleColl.path, eventID));
+  }
+
+  // Weekly tasks section
+  getWeekly() {
+    return getDocs(collection(this.db, this.userDoc.path, 'weekly')).then(
+      (response) => {
+        return response.docs;
+      }
+    );
+  }
+
+  // Needs to take in an object with each day
+  async addToWeekly(weeks: Array<Week>) {
+    let weeklyColl = collection(this.db, this.userDoc.path, `weekly/`);
+    for (let week of weeks) {
+      await addDoc(weeklyColl, week);
+    }
+  }
+
+  deleteFromWeekly(weeklyID: string) {
+    let weeklyColl = collection(this.db, this.userDoc.path, `weekly/`);
+    return deleteDoc(doc(this.db, weeklyColl.path, weeklyID));
+  }
+
+  getWeeklyTaskList() {
+    return getDocs(collection(this.db, this.userDoc.path, 'weekly-tasks')).then(
+      (response) => {
+        return response.docs;
+      }
+    );
+  }
+
+  addToWeeklyTaskList(newTask: string){
+    let weeklyTasks = collection(this.db, this.userDoc.path, 'weekly-tasks/');
+    return addDoc(weeklyTasks, {taskName: newTask});
+  }
+
+  deleteFromWeeklyTaskList(taskID: string){
+    let weeklyColl = collection(this.db, this.userDoc.path, `weekly-tasks/`);
+    return deleteDoc(doc(this.db, weeklyColl.path, taskID));
+
   }
 }

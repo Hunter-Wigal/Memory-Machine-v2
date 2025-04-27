@@ -18,7 +18,7 @@
         </div>
         <div class="body">
           @for(task of taskList; track $index){
-          <div class="task mat-elevation-z8" id="task-{{task.taskID}}" >
+          <div class="task mat-elevation-z8" id="task-{{task.taskID}}">
             <div draggable="false" class="task-name draggable" id="task-{{task.taskID}}-draggable">
               <p style="background-color:blue; width: fit-content; margin-inline: auto;z-index: -1;">{{task.taskName}}
               </p>
@@ -61,20 +61,40 @@
             <td class="">
               <h2>Saturday</h2>
             </td>
+            <td class="">
+              <h2></h2>
+            </td>
           </tr>
-          @for(row of taskRow; track $index){
+          @for(row of taskRows; track $index){
           <tr class="data-row">
-            <td class=" table-task"><div>{{row.sunday}}</div></td>
-            <td class=" table-task"><div>{{row.monday}}</div></td>
-            <td class=" table-task"><div>{{row.tuesday}}</div></td>
-            <td class=" table-task"><div>{{row.wednesday}}</div></td>
-            <td class=" table-task"><div>{{row.thursday}}</div></td>
-            <td class=" table-task"><div>{{row.friday}}</div></td>
-            <td class=" table-task"><div>{{row.saturday}}</div></td>
+            <td class=" table-task">
+              <div>{{row.sunday}}</div>
+            </td>
+            <td class=" table-task">
+              <div>{{row.monday}}</div>
+            </td>
+            <td class=" table-task">
+              <div>{{row.tuesday}}</div>
+            </td>
+            <td class=" table-task">
+              <div>{{row.wednesday}}</div>
+            </td>
+            <td class=" table-task">
+              <div>{{row.thursday}}</div>
+            </td>
+            <td class=" table-task">
+              <div>{{row.friday}}</div>
+            </td>
+            <td class=" table-task">
+              <div>{{row.saturday}}</div>
+            </td>
+            <td class=" "><button mat-button class="" (click)="deleteRow(row.id)">
+                <mat-icon style="margin-inline: auto; color: red;" fontIcon="delete" />
+              </button></td>
           </tr>
           }
 
-          <tr class="" id="addAbove" #addAbove>
+          <tr class="data-row" id="addAbove" #addAbove rownum="0">
             <td class=" table-task droppable" id="drop-sunday"></td>
             <td class=" table-task droppable" id="drop-monday"></td>
             <td class=" table-task droppable" id="drop-tuesday"></td>
@@ -100,14 +120,13 @@
   </div>
   <div class="row">
     <div class="col-3">
-      <form class="task-form">
+      <form class="task-form" onsubmit="event.preventDefault()">
         <mat-form-field style="width: 60%">
-          <input matInput type="text" placeholder="New Task Name">
+          <input matInput type="text" placeholder="New Task Name" #newTaskName>
         </mat-form-field>
-        <button mat-stroked-button>Add</button>
+        <button mat-stroked-button (click)="addTask(newTaskName.value)">Add</button>
       </form>
     </div>
-    <div class="col-7"></div>
+    <div class="col-7 center"><button mat-flat-button class="save-btn" (click)="save()">Save</button></div>
   </div>
 </div>
-

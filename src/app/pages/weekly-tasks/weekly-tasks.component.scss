@@ -1,4 +1,6 @@
 @use "sass:math";
+@use "@angular/material" as mat;
+
 
 .tasks {
   border: 2px solid white;
@@ -92,6 +94,15 @@
 
   td{
     margin: 2%;
-    background-color: gray;
+    // background-color: gray;
   }
 }
+
+//TODO update angular and angular material
+// .save-btn{
+//   @include mat.button-overrides((
+//     filled-container-color: orange,
+//     filled-label-text-color: red,
+//   ));
+// }
+
