@@ -198,7 +198,6 @@ export class DragDropAPI {
     draggable.each((index, element) => {
       // Allow dragging
       $(element).attr('draggable', 'false');
-      let prevStyle = (<HTMLElement>(<unknown>$(element))).style;
       $(element).off();
 
       // Start other event listeners when clicking on a draggable element
@@ -207,11 +206,6 @@ export class DragDropAPI {
 
         target = <HTMLElement>element.cloneNode(true);
 
-        // TODO change to be using the draggingClassName parameter instead
-        // target.style.opacity = "0.6";
-        // //   target.style.zIndex = -1;
-        // target.style.width = "50px";
-        // target.style.height = "50px";
 
         target.className += ' ' + this.draggingClass;
 

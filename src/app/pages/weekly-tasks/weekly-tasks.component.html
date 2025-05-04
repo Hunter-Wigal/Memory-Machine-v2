@@ -20,7 +20,7 @@
           @for(task of taskList; track $index){
           <div class="task mat-elevation-z8" id="task-{{task.taskID}}">
             <div draggable="false" class="task-name draggable" id="task-{{task.taskID}}-draggable">
-              <p style="background-color:blue; width: fit-content; margin-inline: auto;z-index: -1;">{{task.taskName}}
+              <p style="width: fit-content; margin-inline: auto;z-index: -1;">{{task.taskName}}
               </p>
             </div>
 
@@ -119,14 +119,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-3">
+    <div class="col-3 center-form">
       <form class="task-form" onsubmit="event.preventDefault()">
-        <mat-form-field style="width: 60%">
+        <mat-form-field>
           <input matInput type="text" placeholder="New Task Name" #newTaskName>
         </mat-form-field>
         <button mat-stroked-button (click)="addTask(newTaskName.value)">Add</button>
       </form>
     </div>
-    <div class="col-7 center"><button mat-flat-button class="save-btn" (click)="save()">Save</button></div>
+    <div class="col-7"><div class="center-button center-form"><button mat-flat-button class="save-btn" (click)="save()">Save Changes</button></div></div>
   </div>
 </div>
