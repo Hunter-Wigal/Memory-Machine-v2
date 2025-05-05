@@ -24,15 +24,15 @@
               </p>
             </div>
 
-            <button mat-button style="width: fit-contentl; justify-self: center" (click)="deleteTask(task.taskID)">
-              <mat-icon style="margin-inline: auto; color: red;" fontIcon="delete" />
+            <button mat-button style="width: fit-content; justify-self: center" (click)="deleteTask(task.taskID)">
+              <mat-icon class="delete-btn" fontIcon="delete" />
             </button>
           </div>
           }
         </div>
       </div>
     </div>
-    <div class="col-7">
+    <div class="col-7" style="max-height: 65vh;overflow-y: scroll;">
       <table class="weekly-schedule">
         <tr class="header">
           <th colspan="7">Weekly Schedule</th>
@@ -89,7 +89,7 @@
               <div>{{row.saturday}}</div>
             </td>
             <td class=" "><button mat-button class="" (click)="deleteRow(row.id)">
-                <mat-icon style="margin-inline: auto; color: red;" fontIcon="delete" />
+                <mat-icon class="delete-btn" fontIcon="delete" />
               </button></td>
           </tr>
           }
@@ -127,6 +127,9 @@
         <button mat-stroked-button (click)="addTask(newTaskName.value)">Add</button>
       </form>
     </div>
-    <div class="col-7"><div class="center-button center-form"><button mat-flat-button class="save-btn" (click)="save()">Save Changes</button></div></div>
+    <div class="col-7">
+      <div class="center-button center-form"><button mat-flat-button class="save-btn" (click)="save()">Save
+          Changes</button></div>
+    </div>
   </div>
 </div>
