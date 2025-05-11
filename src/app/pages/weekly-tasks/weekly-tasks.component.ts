@@ -174,7 +174,9 @@ export class WeeklyTasksComponent implements AfterContentInit {
   }
 
   deleteTask(taskID: string) {
-    this.fs.deleteFromWeeklyTaskList(taskID);
-    window.location.reload();
+    this.fs.deleteFromWeeklyTaskList(taskID).then(()=>{
+      window.location.reload();
+    });
+
   }
 }
