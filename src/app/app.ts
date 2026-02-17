@@ -18,8 +18,8 @@ import { LoginMessageComponent } from './components/login-message/login-message.
 @Component({
   selector: 'app-root',
   standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
   imports: [
     RouterOutlet,
     NavbarComponent,
@@ -28,7 +28,7 @@ import { LoginMessageComponent } from './components/login-message/login-message.
     LoginMessageComponent,
   ],
 })
-export class AppComponent {
+export class App {
   title = 'memory_machine_app';
   authenticated = false;
   homePage = false;

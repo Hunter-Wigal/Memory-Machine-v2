@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {} from '@angular/material/index';
 import { MatInputModule } from '@angular/material/input';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { FirestoreService } from '../../services/firestore.service';
