@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   RouterOutlet,
   RouterLink,
@@ -30,7 +30,7 @@ import { LoginMessageComponent } from './components/login-message/login-message.
 })
 export class App {
   title = 'memory_machine_app';
-  authenticated = false;
+  authenticated = signal(false);
   homePage = false;
 
   public constructor(
@@ -62,10 +62,10 @@ export class App {
       });
 
     this.as.setUserFunc(() => {
-      this.authenticated = this.as.authenticated();
-
+      this.authenticated.set(this.as.authenticated());
+      console.log("Authenticated: " + this.authenticated());
       if (typeof window !== 'undefined' && window.localStorage) {
-        localStorage.setItem('loggedIn', this.authenticated.toString());
+        localStorage.setItem('loggedIn', this.authenticated().toString());
       }
     });
   }

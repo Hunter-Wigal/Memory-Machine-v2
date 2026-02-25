@@ -1,7 +1,7 @@
 @use "@angular/material" as mat;
-@include mat.core();
-@import "./theme.scss";
+@use "theme";
 
+@include mat.core();
 
 :root {
   --mat-app-background-color: #101414;
@@ -20,8 +20,9 @@
 
 
 html {
-  @include mat.all-component-themes($theme);
-  @include mat.core-color($theme);
+  @include mat.all-component-themes(theme.$theme);
+  @include mat.core-color(theme.$theme);
+  color-scheme: light dark;
 }
 
 body {
@@ -90,7 +91,7 @@ dialog[open] {
 }
 
 .danger {
-  color: mat.get-theme-color($theme, error);
+  color: mat.get-theme-color(theme.$theme, error);
 }
 
 

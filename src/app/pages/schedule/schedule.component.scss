@@ -1,7 +1,9 @@
 // @import "@angular/material/prebuilt-themes/azure-blue.css";
+@use "../../../theme.scss";
 @use "@angular/material" as mat;
+@use "sass:math";
 @include mat.core();
-@import "../../../theme.scss";
+
 
 
 .table-container {
@@ -30,7 +32,7 @@
 
 .cols {
   border-right: 1px dashed white;
-  width: percentage(calc(1 / 7)) - 1.5;
+  width: math.percentage(calc(1 / 7)) - 1.5;
 }
 
 .event-add {
@@ -57,7 +59,7 @@
 }
 
 .delete{
-  color: mat.get-theme-color($theme, error, 50) !important;
+  color: mat.get-theme-color(theme.$theme, error, 50) !important;
   width: 75%;
 }
 .icon{

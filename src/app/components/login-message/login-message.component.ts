@@ -36,9 +36,17 @@ export class LoginMessageComponent implements AfterContentInit {
   }
 
   async checkAuth() {
-    if(!this.as.authenticated() && this.as.isBrowser() && !Boolean(localStorage.getItem("loggedIn"))){
+    // should be authVerifiedFalse because it's checking if it was verified to be false
+    if(!this.as.authenticated() && this.as.isBrowser() && this.parseBoolean(localStorage.getItem("loggedIn"))){
 
           this.authVerified = true;
     }
   }
+
+  parseBoolean(str: string | null): boolean {
+    if (str === null) {
+      return false;
+    }
+    return str.toLowerCase() === 'true';
+}
 }
