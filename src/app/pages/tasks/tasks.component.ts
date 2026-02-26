@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, model } from '@angular/core';
+import { Component, OnInit, ViewChild, model, inject , computed} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FirestoreService } from '../../services/firestore.service';
 import {
@@ -53,13 +53,20 @@ export class TasksComponent implements OnInit{
   @ViewChild('matTable') table!: MatTable<any>;
   @ViewChild(MatSort) sort!: MatSort;
 
+  asapDate = new Date('January 01, 1900 23:59:00 GMT-5');
+
   selected = model<Date | null>(null);
 
-  dataSource = new MatTableDataSource<Task>();
+  dataSource = computed(() => {
+    const datasource = new MatTableDataSource<Task>();
+    return datasource;
+  });
 
   columnsToDisplay = ['title', 'date', 'time', 'delete'];
 
-  constructor(private firestore: FirestoreService, private auth: AuthService) {
+  private firestore = inject(FirestoreService);
+
+  constructor(private auth: AuthService) {
     // Load tasks when auth state changes
     this.auth.setUserFunc(async () => {
       await this.firestore.setuserDoc();
@@ -88,7 +95,7 @@ export class TasksComponent implements OnInit{
         if (data['date'] != 'ASAP') {
           date = new Date(data['date'].seconds * 1000);
         } else {
-          date = 'ASAP';
+          date = new Date('January 01, 1900 11:59:00');
         }
 
         let task = {
@@ -100,23 +107,25 @@ export class TasksComponent implements OnInit{
       }
 
       // Set new data and rerender table rows
-      this.dataSource = new MatTableDataSource(tasks);
-      this.table.renderRows();
+      this.dataSource().data = tasks;
+      // this.dataSource.set(new MatTableDataSource(tasks));
+      // this.table.renderRows();
 
       // Has to be set after the table already has data. Don't ask why
-      this.dataSource.sort = this.sort;
+      this.dataSource().sort = this.sort;
     });
   }
 
   addTask(newTask: Task) {
     let taskDate: Date | string = new Date();
     if (newTask.date) {
-      let taskDate = new Date(newTask.date);
+
+      taskDate = new Date(newTask.date);
+
       taskDate.setDate(taskDate.getUTCDate());
     } else {
-      taskDate = 'ASAP';
+      taskDate = new Date('January 01, 1900 11:59:00');
     }
-
     // Extract the hours and minutes from the string. Easiest way to do it
     if (
       newTask.time != undefined &&
@@ -127,9 +136,10 @@ export class TasksComponent implements OnInit{
       let taskTime = { hours: Number(split[0]), minutes: Number(split[1]) };
       taskDate.setHours(taskTime.hours, taskTime.minutes);
     }
+
     // Assume end of day if not specified
     else if (typeof taskDate != 'string') taskDate.setHours(23, 59);
-
+    console.log(taskDate);
     // Call function in firestore service, handle return value from promise
     this.firestore
       .insertNewTask({ title: newTask.title, date: taskDate })

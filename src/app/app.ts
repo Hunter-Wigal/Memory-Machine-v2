@@ -1,8 +1,6 @@
 import { Component, signal } from '@angular/core';
 import {
   RouterOutlet,
-  RouterLink,
-  RouterLinkActive,
   ActivatedRoute,
   Router,
   NavigationEnd,
@@ -31,7 +29,7 @@ import { LoginMessageComponent } from './components/login-message/login-message.
 export class App {
   title = 'memory_machine_app';
   authenticated = signal(false);
-  homePage = false;
+  homePage = signal(false);
 
   public constructor(
     private titleService: Title,
@@ -49,8 +47,8 @@ export class App {
           const child: ActivatedRoute | null = this.route.firstChild;
           let title = child && child.snapshot.data['title'];
           if (title) {
-            if (title === 'Home') this.homePage = true;
-            else this.homePage = false;
+            if (title === 'Home') this.homePage.set(true);
+            else this.homePage.set(false);
             return title;
           }
         })
@@ -63,7 +61,6 @@ export class App {
 
     this.as.setUserFunc(() => {
       this.authenticated.set(this.as.authenticated());
-      console.log("Authenticated: " + this.authenticated());
       if (typeof window !== 'undefined' && window.localStorage) {
         localStorage.setItem('loggedIn', this.authenticated().toString());
       }

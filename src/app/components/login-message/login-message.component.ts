@@ -3,6 +3,7 @@ import {
   Component,
   Inject,
   PLATFORM_ID,
+  signal
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth.service';
@@ -17,7 +18,7 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './login-message.component.scss',
 })
 export class LoginMessageComponent implements AfterContentInit {
-  authVerified = false;
+  authVerified = signal(false);
   private isBrowser: boolean;
 
   constructor(
@@ -25,26 +26,26 @@ export class LoginMessageComponent implements AfterContentInit {
     @Inject(PLATFORM_ID) platformId: Object
   ) {
 
-    this.authVerified = false;
+    this.authVerified.set(false);
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
   ngAfterContentInit(): void {
-    if (!this.authVerified && this.isBrowser) {
+    if (!this.authVerified() && this.isBrowser) {
       this.checkAuth();
     }
   }
 
   async checkAuth() {
     // should be authVerifiedFalse because it's checking if it was verified to be false
-    if(!this.as.authenticated() && this.as.isBrowser() && this.parseBoolean(localStorage.getItem("loggedIn"))){
-
-          this.authVerified = true;
+    if(!this.as.authenticated() && this.as.isBrowser() && !this.parseBoolean(localStorage.getItem("loggedIn"))){
+      this.authVerified.set(true);
     }
   }
 
   parseBoolean(str: string | null): boolean {
     if (str === null) {
+      localStorage.setItem('loggedIn', 'false');
       return false;
     }
     return str.toLowerCase() === 'true';

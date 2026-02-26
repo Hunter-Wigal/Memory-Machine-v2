@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { User } from 'firebase/auth';
+import { User } from '@angular/fire/auth';
 // Temp solution
 import { NgForm, FormsModule } from '@angular/forms';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -70,7 +70,6 @@ export class NavbarComponent implements AfterContentInit {
 
   public async signOut() {
     await this.authService.signOut();
-    location.reload();
   }
 
   public accountDropdown(dropdown: HTMLElement) {

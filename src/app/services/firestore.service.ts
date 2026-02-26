@@ -1,18 +1,21 @@
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
-  DocumentReference,
   Firestore,
-  addDoc,
   collection,
+  addDoc,
+  getDocs,
   deleteDoc,
   doc,
-  getDocs,
+  DocumentReference,
 } from '@angular/fire/firestore';
 import { Task } from '../pages/tasks/tasks.component';
 import { Project } from '../pages/projects/projects.component';
 import { EventType } from '../pages/schedule/schedule.component';
 import { AuthService } from './auth.service';
 import { isPlatformBrowser } from '@angular/common';
+import { setLogLevel, LogLevel } from '@angular/fire';
+
+setLogLevel(LogLevel.WARN);
 interface Week {
   row?: number;
   sunday: string | null;
@@ -41,7 +44,7 @@ export class FirestoreService {
 
   private readonly platformId = inject(PLATFORM_ID);
 
-  constructor(private db: Firestore, private authService: AuthService) {}
+  constructor(private db: Firestore,private authService: AuthService) {}
 
   public async setuserDoc() {
     this.userDoc = doc(

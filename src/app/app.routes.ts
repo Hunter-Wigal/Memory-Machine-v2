@@ -4,7 +4,6 @@ import { TasksComponent } from './pages/tasks/tasks.component';
 import { CalendarPage } from './pages/calendar/calendar-page.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
-import { Component } from '@angular/core';
 import { WeeklyTasksComponent } from './pages/weekly-tasks/weekly-tasks.component';
 
 export const routes: Routes = [

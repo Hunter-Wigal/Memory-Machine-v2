@@ -4,6 +4,7 @@ import {
   ViewChild,
   viewChild,
   AfterContentInit,
+  signal
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import $ from 'jquery';
 import * as dd from '../../services/dragdrop.service';
 import { FirestoreService } from '../../services/firestore.service';
-import { DocumentData } from 'firebase/firestore';
+import { DocumentData } from '@angular/fire/firestore';
 import { AuthService } from '../../services/auth.service';
 
 interface Week {
@@ -40,7 +41,7 @@ interface WeeklyTask {
 })
 export class WeeklyTasksComponent implements AfterContentInit {
   protected taskRows: Array<Week> = [];
-  protected taskList: Array<WeeklyTask> = [];
+  protected taskList = signal(new Array<WeeklyTask>());
   public dragging: HTMLElement | null = null;
   protected draggingX = 0;
   protected draggingY = 0;
@@ -54,7 +55,7 @@ export class WeeklyTasksComponent implements AfterContentInit {
   fetchedRows: number = 0;
 
   constructor(private fs: FirestoreService, private as: AuthService) {
-    this.taskList.push({ taskID: '0', taskName: 'Test' });
+    this.taskList.update((prev) => [...prev, { taskID: '0', taskName: 'Test' }]);
 
     this.dragdropAPI = new dd.DragDropAPI();
     this.dragdropAPI.droppedClass = 'dropped';
@@ -93,11 +94,12 @@ export class WeeklyTasksComponent implements AfterContentInit {
 
   async updateTasklist() {
     return this.fs.getWeeklyTaskList().then((docs) => {
-      this.taskList = new Array();
+      let tempArr = new Array<WeeklyTask>();
       for (let item of docs) {
         let data = item.data();
-        this.taskList.push({ taskID: item.id, taskName: data['taskName'] });
+        tempArr.push({ taskID: item.id, taskName: data['taskName'] });
       }
+      this.taskList.set(tempArr);
       return true;
     });
   }

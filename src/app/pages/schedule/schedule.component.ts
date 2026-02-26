@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -53,7 +53,7 @@ export interface EventType {
   styleUrl: './schedule.component.scss',
 })
 export class ScheduleComponent implements OnInit {
-  dataSource: Array<EventType> = [];
+  dataSource = signal<EventType[]>([]);
   displayedColumns = [
     'times',
     'sunday',
@@ -92,7 +92,7 @@ export class ScheduleComponent implements OnInit {
 
   updateSchedule() {
     this.fs.getSchedule().then((schedule) => {
-      this.dataSource = [];
+      this.dataSource.set([]);
       for (let doc of schedule) {
         let data = doc.data();
         let startTime = data['startTime'].split(':');
@@ -118,7 +118,7 @@ export class ScheduleComponent implements OnInit {
           saturday: data['saturday'],
           id: id,
         };
-        this.dataSource.push(newRow);
+        this.dataSource.update((prev) => [...prev, newRow]);
       }
       this.table.renderRows();
     });

@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
+import { browserLocalPersistence, browserSessionPersistence } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login-modal',
@@ -70,7 +70,6 @@ export class LoginModalComponent {
       .then(() => {
         this.loginForm.reset();
         this.dialogRef.close();
-        location.reload();
       });
   }
 
