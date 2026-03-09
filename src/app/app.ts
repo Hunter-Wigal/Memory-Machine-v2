@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   RouterOutlet,
-  RouterLink,
-  RouterLinkActive,
   ActivatedRoute,
   Router,
   NavigationEnd,
@@ -18,8 +16,8 @@ import { LoginMessageComponent } from './components/login-message/login-message.
 @Component({
   selector: 'app-root',
   standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
   imports: [
     RouterOutlet,
     NavbarComponent,
@@ -28,10 +26,10 @@ import { LoginMessageComponent } from './components/login-message/login-message.
     LoginMessageComponent,
   ],
 })
-export class AppComponent {
+export class App {
   title = 'memory_machine_app';
-  authenticated = false;
-  homePage = false;
+  authenticated = signal(false);
+  homePage = signal(false);
 
   public constructor(
     private titleService: Title,
@@ -49,8 +47,8 @@ export class AppComponent {
           const child: ActivatedRoute | null = this.route.firstChild;
           let title = child && child.snapshot.data['title'];
           if (title) {
-            if (title === 'Home') this.homePage = true;
-            else this.homePage = false;
+            if (title === 'Home') this.homePage.set(true);
+            else this.homePage.set(false);
             return title;
           }
         })
@@ -62,10 +60,9 @@ export class AppComponent {
       });
 
     this.as.setUserFunc(() => {
-      this.authenticated = this.as.authenticated();
-
+      this.authenticated.set(this.as.authenticated());
       if (typeof window !== 'undefined' && window.localStorage) {
-        localStorage.setItem('loggedIn', this.authenticated.toString());
+        localStorage.setItem('loggedIn', this.authenticated().toString());
       }
     });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {} from '@angular/material/index';
 import { MatInputModule } from '@angular/material/input';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { FirestoreService } from '../../services/firestore.service';
@@ -54,7 +53,7 @@ export interface EventType {
   styleUrl: './schedule.component.scss',
 })
 export class ScheduleComponent implements OnInit {
-  dataSource: Array<EventType> = [];
+  dataSource = signal<EventType[]>([]);
   displayedColumns = [
     'times',
     'sunday',
@@ -93,7 +92,7 @@ export class ScheduleComponent implements OnInit {
 
   updateSchedule() {
     this.fs.getSchedule().then((schedule) => {
-      this.dataSource = [];
+      this.dataSource.set([]);
       for (let doc of schedule) {
         let data = doc.data();
         let startTime = data['startTime'].split(':');
@@ -119,7 +118,7 @@ export class ScheduleComponent implements OnInit {
           saturday: data['saturday'],
           id: id,
         };
-        this.dataSource.push(newRow);
+        this.dataSource.update((prev) => [...prev, newRow]);
       }
       this.table.renderRows();
     });

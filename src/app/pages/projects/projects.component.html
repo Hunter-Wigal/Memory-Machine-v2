@@ -1,5 +1,5 @@
 <div class="container">
-  @if(projects.length > 0){
+  @if(projects().length > 0){
   <div class="project-table mat-tertiary">
     <table class="mat-table">
       <thead>
@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        @for(project of projects; track project){
+        @for(project of projects(); track project){
         <tr style="border-top: 1px solid;">
           <td>{{ project.projectName }}</td>
           <td>{{ project.numTasks }}</td>

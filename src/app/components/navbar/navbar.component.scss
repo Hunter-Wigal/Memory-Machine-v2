@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
+@use "../../../theme.scss";
 @include mat.core();
-@import "../../../theme.scss";
+
 
 // $theme: mat.define-theme();
 
@@ -102,7 +103,7 @@
 // $theme: mat.define-theme();
 
 .navbar {
-  background-color: mat.get-theme-color($theme, primary, 30);
+  background-color: mat.get-theme-color(theme.$theme, primary, 30);
 }
 
 .hamburger-menu {

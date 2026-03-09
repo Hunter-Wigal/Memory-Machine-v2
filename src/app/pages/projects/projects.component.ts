@@ -1,4 +1,4 @@
-import { Component, effect, signal, AfterContentInit } from '@angular/core';
+import { Component, effect, signal, AfterContentInit, inject } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -32,13 +32,14 @@ export interface Project {
   styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent implements AfterContentInit {
-  projects: Project[];
+  projects = signal<Project[]>([]);
   priorityValid: boolean;
   displayedColumns: string[] = ['name', 'tasks', 'priority', 'taskButton'];
   finishedSetting = signal(false);
+  private firestore = inject(FirestoreService);
 
-  constructor(private firestore: FirestoreService, private auth: AuthService) {
-    this.projects = [];
+  constructor(private auth: AuthService) {
+    this.projects.set([]);
     this.priorityValid = true;
 
     this.auth.setUserFunc(async () => {
@@ -67,14 +68,14 @@ export class ProjectsComponent implements AfterContentInit {
   }
 
   cacheProjects() {
-    this.firestore.cacheProjects('projects', this.projects);
+    this.firestore.cacheProjects('projects', this.projects());
   }
 
   loadProjects(checkCached: boolean): void {
     let cachedProjects = this.checkCachedProjects();
 
     if (cachedProjects.length > 0 && checkCached) {
-      this.projects = [];
+      let tempArr = [];
 
       for (let project of cachedProjects) {
         let taskArr = [];
@@ -83,20 +84,21 @@ export class ProjectsComponent implements AfterContentInit {
           taskArr.push(project.tasks[task]);
         }
         project.tasks = taskArr;
-        this.projects.push(project);
+        tempArr.push(project);
       }
+      this.projects.set(tempArr);
       return;
     }
 
     this.firestore.getProjects().then(async (docs) => {
-      this.projects = docs.map((doc) => {
+      this.projects.set(docs.map((doc) => {
         let project = <Project>doc.data()['project'];
         project.id = doc.id;
         project.tasks = new Array<DocumentData>();
         return project;
-      });
+      }));
 
-      for (let project of this.projects) {
+      for (let project of this.projects()) {
         await this.firestore.getProjectTasks(project.id).then((tasks) => {
           project.tasks = tasks.docs.map((doc) => {
             return { taskName: doc.data()['taskName'], taskID: doc.id };
